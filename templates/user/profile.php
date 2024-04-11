@@ -100,30 +100,43 @@
                     <tbody>
                       <?php
                       // https://min-api.cryptocompare.com/data/v2/histoday?fsym=BTC&tsym=EUR&limit=30&aggregate=3&e=CCCAGG
-                      // Je récupère les données de l'API cryptocompare.com pour le BTC en EUR
-                      $data = json_decode(file_get_contents('https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC&tsyms=EUR'), true);
-                      // J'utilise le tableau "RAW" pour récupérer les données
 
+                      // $data = json_decode(file_get_contents('https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC&tsyms=EUR'), true);
+                      use App\Entity\Crypto;
+
+                      $crypto = new Crypto();
+                      // Je récupère les données de l'API cryptocompare.com (pour le BTC, en EUR)
+                      $cryptoData = $crypto->getDataFromApi('BTC');
                       // Je récupère le symbole du Bitcoin
-                      $btc_symbol = $data['RAW']['BTC']['EUR']['FROMSYMBOL'];
+                      $crypto_symbol = $cryptoData['FROMSYMBOL'];
+
                       // Je récupère le Slug de l'url logo du Bitcoin
-                      $btc_logo = $data['RAW']['BTC']['EUR']['IMAGEURL'];
+                      $crypto_logo = $cryptoData['IMAGEURL'];
 
                       // Je récupère le prix du Bitcoin en EUR
-                      $btc_price = $data['RAW']['BTC']['EUR']['PRICE'];
-                      $btc_price = number_format($btc_price, 2, ',', ' ');
-                      $btc_price = $btc_price . ' €';
+                      $crypto_price = $cryptoData['PRICE'];
+                      $crypto_price = number_format($crypto_price, 2, ',', ' ');
+                      $crypto_price = $crypto_price . ' €';
 
                       // Je récupère la variation du Bitcoin en EUR sur 24h
-                      $btc_daily_variation = $data['RAW']['BTC']['EUR']['CHANGEPCT24HOUR'];
-                      $btc_daily_variation = number_format($btc_daily_variation, 2, ',', ' ');
-                      $btc_daily_variation = $btc_daily_variation . ' %';
+                      $crypto_daily_variation = $cryptoData['CHANGEPCT24HOUR'];
+                      $crypto_daily_variation = number_format($crypto_daily_variation, 2, ',', ' ');
+                      $crypto_daily_variation = $crypto_daily_variation . ' %';
+
                       ?>
                       <tr>
                         <th scope="row">1</th>
-                        <td><span class="px-1"><img class="img-fluid" src="https://www.cryptocompare.com<?= $btc_logo ?>" width="30px" height="30px" alt="logo crypto"></span><?= $btc_symbol ?></td>
-                        <td><?= $btc_price  ?></td>
-                        <td><?= $btc_daily_variation ?></td>
+                        <td><span class="px-1"><img class="img-fluid" src="https://www.cryptocompare.com<?= $crypto_logo ?>" width="30px" height="30px" alt="logo crypto"></span><?= $crypto_symbol ?></td>
+                        <td><?= $crypto_price ?></td>
+                        <td><?= $crypto_daily_variation ?></td>
+                        <td>en savoir + </td>
+                      </tr>
+
+                      <tr>
+                        <th scope="row">1</th>
+                        <td><span class="px-1"><img class="img-fluid" src="https://www.cryptocompare.com<?= $crypto_logo ?>" width="30px" height="30px" alt="logo crypto"></span><?= $crypto_symbol ?></td>
+                        <td><?= $crypto_price ?></td>
+                        <td><?= $crypto_daily_variation ?></td>
                         <td>en savoir + </td>
                       </tr>
 
