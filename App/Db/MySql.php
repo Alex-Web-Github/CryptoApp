@@ -10,6 +10,7 @@ class Mysql
   private $db_port;
   private $db_host;
   private $pdo = null;
+  // cette propriété est statique pour pouvoir être partagée entre les différentes instances de la classe Mysql (voir getInstance())
   private static $_instance = null;
 
   private function __construct()
@@ -35,8 +36,9 @@ class Mysql
 
   public static function getInstance(): self
   // Design Pattern Singleton
-  // Permet de n'avoir qu'une seule instance de la classe Mysql
+  // Permet de n'avoir qu'une seule instance de la classe Mysql dans la mémoire de PHP
   // et de la réutiliser à chaque fois que l'on en a besoin
+  // 
   // Static : permet d'appeler la méthode directement avec la classe (ie: sans instancier d'Objet -> "new MyObject()").
   // On l'appelle commme ceci : $mysql = Mysql::getInstance();
   {

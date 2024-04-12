@@ -5,17 +5,16 @@ namespace App\Entity;
 
 class User extends Entity
 {
-  // On définit les propriétés de l'objet User
+
   protected ?int $id = null;
   protected ?string $email = '';
-  // protected ?string $password = '';
   protected ?string $first_name = '';
   protected ?string $last_name = '';
   protected ?string $birth_date = '';
   protected ?string $user_name = '';
   protected ?string $role = '';
-  protected ?string $favorites_crypto = '';
   // protected ?string $avatar = '';
+  // protected ?string $password = '';
 
   public function getId(): ?int
   {
@@ -97,19 +96,6 @@ class User extends Entity
   public function setUserName(?string $user_name): self
   {
     $this->user_name = $user_name;
-    return $this;
-  }
-
-
-  // TODO : créer un champs favorites_crypto dans la table user
-  public function getFavoritesCrypto(): ?string
-  {
-    return $this->favorites_crypto;
-  }
-
-  public function setFavoritesCrypto(?string $favorites_crypto): self
-  {
-    $this->favorites_crypto = $favorites_crypto;
     return $this;
   }
 

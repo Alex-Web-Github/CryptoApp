@@ -28,12 +28,12 @@
         <form class="w-100" method="post">
           <div class="mb-3">
             <label for="user_name" class="form-label text-white">Nom d'utilisateur</label>
-            <input type="text" class="form-control " id="user_name" name="user_name" value="">
+            <input type="text" class="form-control " id="user_name" name="user_name" value="<?= isset($_SESSION['user']) ? $_SESSION['user']['user_name'] : '' ?>">
           </div>
 
           <div class="mb-3">
             <label for="email" class="form-label text-white">E-mail</label>
-            <input type="email" class="form-control " id="email" name="email" value="">
+            <input type="email" class="form-control " id="email" name="email" value="<?= isset($_SESSION['user']) ? $_SESSION['user']['email'] : '' ?>">
           </div>
 
           <div class="">

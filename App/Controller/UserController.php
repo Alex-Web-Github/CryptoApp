@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Autoloader;
 use App\Repository\UserRepository;
+use App\Repository\UserCryptoRepository;
 use App\Entity\User;
 
 class UserController extends Controller
@@ -170,10 +171,49 @@ class UserController extends Controller
 
   protected function profile()
   {
-    $this->render('user/profile', [
-      // on peut passer ici des paramètres à la View Profile.php
-      // 'test' => 555,
-      // 'nom' => "John",
-    ]);
+    try {
+      $errors = [];
+      // $user = new User();
+
+      // Récupérer l'id de l'utilisateur connecté
+      $user_id = $_SESSION['user']['id'];
+
+      if ($user_id) {
+
+        if (empty($errors)) {
+
+          $userCryptoRepository = new UserCryptoRepository();
+
+          // Je récupère les cryptos favorites de l'utilisateur depuis la table crypto_user
+          $favoritesCryptoIdList = $userCryptoRepository->getFavoritesFromUser($user_id);
+
+          $favoritesList = [];
+          foreach ($favoritesCryptoIdList as $favoriteCrypto) {
+            // Je récupère le nom de la crypto favorite de l'utilisateur
+            $cryptoName = $userCryptoRepository->getCryptoNameFromId($favoriteCrypto['crypto_id'])['name'];
+
+            // Je récupère les données de la crypto avec l'API cryptocompare.com (en EUR)
+            $cryptoData = $userCryptoRepository->getDataApiFromCurrency($cryptoName);
+
+            // Je stocke les données des cryptos favorites dans un tableau clé/valeur (nom de la crypto => données de la crypto)
+            // Je passerai ce tableau à la View pour afficher les données des cryptos favorites de l'utilisateur dans le template "favorites-partial.php"
+            $cryptoDataList[$cryptoName] = $cryptoData;
+          }
+
+          // https://min-api.cryptocompare.com/data/v2/histoday?fsym=BTC&tsym=EUR&limit=30&aggregate=3&e=CCCAGG
+
+        }
+      }
+
+      // Pour afficher la page "Profil" d'un utilisateur
+      $this->render('user/profile', [
+        'errors' => $errors,
+        'cryptoDataList' => $cryptoDataList,
+      ]);
+    } catch (\Exception $e) {
+      $this->render('errors/default', [
+        'error' => $e->getMessage()
+      ]);
+    }
   }
 }

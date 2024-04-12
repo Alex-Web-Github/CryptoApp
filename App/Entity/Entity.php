@@ -23,12 +23,14 @@ class Entity
       foreach ($data as $key => $value) {
         // Pour chaque donnée, on appelle le "Setter"
         $methodName = 'set' . StringTools::toPascalCase($key);
-        //  (exe: setFirstName, setLastName, ...)
+        // exe: setFirstName, setLastName, ...
+
         if (method_exists($this, $methodName)) {
-          if ($key == 'created_at') {
-            // On transforme la date en objet DateTime POURQUOI ??
-            $value = new \DateTime($value);
-          }
+          // 
+          // if ($key == 'created_at') {
+          //   // On transforme la date en objet DateTime POURQUOI ??
+          //   $value = new \DateTime($value);
+          // }
           // {$methodName}($value) est un appel dynamique de méthode, équivalent de $this->setFirstName($value);
           $this->{$methodName}($value);
         }
