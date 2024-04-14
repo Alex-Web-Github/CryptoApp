@@ -1,4 +1,3 @@
-<!-- <div class="container px-5 bg-light rounded-3"> -->
 <div class="row gx-5 align-items-center justify-content-between">
 
   <div class="col-12 col-md-8 order-last order-md-first">
@@ -33,5 +32,3 @@
   <!-- Affichage de l'Avatar -->
   <div class="col-10 col-sm-8 col-md-4 mx-auto order-first order-md-2"><img class="img-fluid rounded-3 my-5" src="assets/img/Logo-MyCrypto.svg" alt="avatar" /></div>
 </div>
-
-<!-- </div> -->

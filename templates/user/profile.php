@@ -16,10 +16,6 @@
                 <li class="nav-item"><a class="nav-link" href="index.php?controller=auth&action=logout">Déconnexion</a></li>
                 <!-- <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Portfolio</a>
-              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
-                <li><a class="dropdown-item" href="portfolio-overview.html">Portfolio Overview</a></li>
-                <li><a class="dropdown-item" href="portfolio-item.html">Portfolio Item</a></li>
-              </ul>
             </li> -->
               </ul>
             </div>
@@ -30,9 +26,7 @@
             <div class="row gx-5 align-items-center justify-content-center">
               <div class="col-lg-8 col-xl-7 col-xxl-6">
                 <div class="my-5 text-center">
-                  <h1 class="display-5 fw-bolder text-white mb-2">Bienvenue <span class="fs-2 fw-light"><?= isset($_SESSION['user']) ? $_SESSION['user']['user_name'] . '(Id# ' . $_SESSION['user']['id'] . ')' : '' ?></span></h1>
-
-                  <p class="lead text-white-50 mb-4">Vous êtes connecté en tant que Rôle : <?= isset($_SESSION['user']) ? $_SESSION['user']['role'] : '' ?></p>
+                  <h1 class="display-5 fw-bolder text-white mb-2">Bienvenue <span class="fs-2 fw-light"><?= isset($_SESSION['user']) ? ($_SESSION['user']['first_name'] . ' <small>alias</small> ' . $_SESSION['user']['user_name']) : '' ?></span></h1>
 
                 </div>
               </div>

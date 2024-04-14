@@ -12,7 +12,6 @@ class UserCryptoRepository extends Repository
 
   // Je récupère les données de l'API pour une crypto donnée
   // ---> peut-être à placer dans /tools plutôt ???
-
   public function getDataApiFromCurrency(string $currency): array|bool
   {
     $url = 'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=' . $currency . '&tsyms=EUR';
@@ -21,16 +20,15 @@ class UserCryptoRepository extends Repository
     return $data['RAW'][$currency]['EUR'];
   }
 
+
   // Je récupère les crypto favorites d'un utilisateur
-  public function getFavoritesFromUser(int $user_id)
+  public function FindAllFromUser(int $user_id): array|bool
   {
     $query = $this->pdo->prepare("SELECT * FROM crypto_user WHERE user_id = :user_id");
     $query->bindParam(':user_id', $user_id, $this->pdo::PARAM_STR);
     $query->execute();
     $user_favorites = $query->fetchAll($this->pdo::FETCH_ASSOC);
     if ($user_favorites) {
-      // return UserCrypto::createAndHydrate($user_favorites);
-
       // ça retourne un tableau avec les données de la table crypto_user, sinon False
       return $user_favorites;
     } else {
@@ -38,7 +36,7 @@ class UserCryptoRepository extends Repository
     }
   }
 
-  public function getCryptoNameFromId(int $crypto_id): array|bool
+  public function FindCryptoNameFromId(int $crypto_id): array|bool
   {
     $query = $this->pdo->prepare("SELECT * FROM all_crypto WHERE id = :crypto_id");
     $query->bindParam(':crypto_id', $crypto_id, $this->pdo::PARAM_STR);
