@@ -10,10 +10,6 @@ session_set_cookie_params([
 ]);
 session_start();
 
-// On définit les constantes _ROOTPATH_
-define('_ROOTPATH_', __DIR__);
-define('_TEMPLATEPATH_', __DIR__ . '/templates');
-
 // ça sert à Quoi ?? 
 spl_autoload_register();
 

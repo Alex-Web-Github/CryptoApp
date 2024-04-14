@@ -201,7 +201,6 @@ class UserController extends Controller
             // Je stocke les données des cryptos favorites dans un tableau clé/valeur (nom de la crypto => données de la crypto)
             // Je passerai ce tableau à la View pour afficher les données des cryptos favorites de l'utilisateur dans le template "favorites-partial.php"
             $cryptoDataList[$cryptoName] = $cryptoData;
-            // }
 
             // https://min-api.cryptocompare.com/data/v2/histoday?fsym=BTC&tsym=EUR&limit=30&aggregate=3&e=CCCAGG
 
@@ -209,12 +208,9 @@ class UserController extends Controller
         } else {
           $cryptoDataList = [];
           $errors = "Vous n'avez pas de crypto favorites renseignées.";
-          // throw new \Exception("Vous n'avez pas de crypto favorites renseignées.");
         }
       } else {
         throw new \Exception("Votre session a expiré, veuillez vous reconnecter.");
-        // Enfin on redirige vers la page de login
-        // header('Location: index.php?controller=auth&action=login');
       }
 
       // Pour afficher la page "Profil" d'un utilisateur
@@ -246,6 +242,7 @@ class UserController extends Controller
 
         // Je récupère les données de la crypto avec l'API cryptocompare.com (en EUR)
         $cryptoData = $userCryptoRepository->getDataApiFromCurrency($cryptoName);
+
 
         // Pour afficher la page "Profil" d'une crypto favorite de l'utilisateur
         $this->render('crypto/info-crypto', [
