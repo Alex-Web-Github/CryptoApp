@@ -207,7 +207,7 @@ class UserController extends Controller
           }
         } else {
           $cryptoDataList = [];
-          $errors = "Vous n'avez pas de crypto favorites renseignées.";
+          $errors = "Vous n'avez pas de cryptos favorites.";
         }
       } else {
         throw new \Exception("Votre session a expiré, veuillez vous reconnecter.");
