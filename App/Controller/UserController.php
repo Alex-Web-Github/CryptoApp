@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Autoloader;
 use App\Repository\UserRepository;
-use App\Repository\UserCryptoRepository;
+use App\Repository\CryptoRepository;
 use App\Entity\User;
+use App\API\ApiTools;
 
 class UserController extends Controller
 {
+
   public function route(): void
   {
     try {
@@ -18,7 +20,7 @@ class UserController extends Controller
             $this->register();
             break;
           case 'profile':
-            isset($_GET['name']) ? $this->infoCrypto() : $this->profile();
+            $this->profile();
             break;
           case 'update':
             $this->updateUser();
@@ -26,6 +28,7 @@ class UserController extends Controller
           case 'delete':
             $this->deleteUser();
             break;
+
           default:
             throw new \Exception("Cette action n'existe pas : " . $_GET['action']);
             break;
@@ -76,7 +79,7 @@ class UserController extends Controller
       }
 
       // Pour afficher le formulaire de création d'un utilisateur
-      $this->render('user/sign-up', [
+      $this->render('user/signUp', [
         // 'pageTitle' => '',
         // On passe les erreurs à la View pour pouvoir les afficher dans le formulaire le cas échéant
         'errors' => $errors
@@ -169,41 +172,54 @@ class UserController extends Controller
     }
   }
 
+  // Supprimer un Utilisateur par son Id
+  protected function deleteUserById()
+  {
+    try {
+      $errors = [];
+      $user = new User();
+
+      // Puis je récupère l'id de l'utilisateur à supprimer
+      $user->setId($_GET['id']);
+
+      $userRepository = new UserRepository();
+      $userRepository->delete($user);
+
+      // Enfin on redirige vers la page Admin
+      header('Location: index.php?controller=admin&action=showAllUsers');
+    } catch (\Exception $e) {
+      $this->render('errors/default', [
+        'error' => $e->getMessage()
+      ]);
+    }
+  }
   protected function profile()
   {
     try {
       $errors = [];
       $user = new User();
       // si l'utilisateur est connecté (voir App\Entity\User.php pour la méthode isLogged()
-      if ($user::isLogged()) {
+      if (User::isLogged()) {
         // Récupérer l'id de l'utilisateur connecté
         $user_id = $_SESSION['user']['id'];
 
-        // if (empty($errors)) {
-        $userCryptoRepository = new UserCryptoRepository();
+        $cryptoRepository = new CryptoRepository();
 
         // Je récupère les cryptos favorites de l'utilisateur depuis la table crypto_user
-        $favoritesCryptoId = $userCryptoRepository->FindAllFromUser($user_id);
+        $userFavoritesCrypto = $cryptoRepository->FindAllByUserId($user_id);
 
-        if ($favoritesCryptoId) {
+        if ($userFavoritesCrypto) {
           // Je vérifie si l'utilisateur a des cryptos favorites renseignées
-          $favoritesList = [];
 
-          foreach ($favoritesCryptoId as $favoriteCrypto) {
-            // Je récupère le nom de la crypto favorite de l'utilisateur
-            $cryptoName = $userCryptoRepository->FindCryptoNameFromId($favoriteCrypto['crypto_id'])['name'];
-            // $cryptoId = $favoriteCrypto['crypto_id'];
-            // var_dump($cryptoId);
+          $cryptoDataList = [];
+          foreach ($userFavoritesCrypto as $favoriteCrypto) {
+            $favoriteCryptoName = $favoriteCrypto['name'];
 
             // Je récupère les données de la crypto avec l'API cryptocompare.com (en EUR)
-            $cryptoData = $userCryptoRepository->getDataApiFromCurrency($cryptoName);
+            $favoriteCryptoDataByName = ApiTools::getInformationFromApi($favoriteCryptoName);
 
             // Je stocke les données des cryptos favorites dans un tableau clé/valeur (nom de la crypto => données de la crypto)
-            // Je passerai ce tableau à la View pour afficher les données des cryptos favorites de l'utilisateur dans le template "favorites-partial.php"
-            $cryptoDataList[$cryptoName] = $cryptoData;
-
-            // https://min-api.cryptocompare.com/data/v2/histoday?fsym=BTC&tsym=EUR&limit=30&aggregate=3&e=CCCAGG
-
+            $cryptoDataList[$favoriteCryptoName] = $favoriteCryptoDataByName;
           }
         } else {
           $cryptoDataList = [];
@@ -216,6 +232,7 @@ class UserController extends Controller
       // Pour afficher la page "Profil" d'un utilisateur
       $this->render('user/profile', [
         'errors' => $errors,
+        // Je passe le tableau des cryptos favorites de l'utilisateur dans le template "favorites-partial.php" sous forme de tableau associatif $cryptoDataList
         'cryptoDataList' => $cryptoDataList,
       ]);
     } catch (\Exception $e) {
@@ -224,7 +241,6 @@ class UserController extends Controller
       ]);
     }
   }
-
   protected function infoCrypto()
   {
     try {
@@ -238,11 +254,10 @@ class UserController extends Controller
         // Je récupère le nom de la crypto favorite de l'utilisateur
         $cryptoName = $_GET['name'];
 
-        $userCryptoRepository = new UserCryptoRepository();
+        $cryptoRepository = new CryptoRepository();
 
         // Je récupère les données de la crypto avec l'API cryptocompare.com (en EUR)
-        $cryptoData = $userCryptoRepository->getDataApiFromCurrency($cryptoName);
-
+        $cryptoData = $cryptoRepository->getDataApiFromCurrency($cryptoName);
 
         // Pour afficher la page "Profil" d'une crypto favorite de l'utilisateur
         $this->render('crypto/info-crypto', [

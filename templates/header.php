@@ -40,7 +40,7 @@ use App\Tools\NavigationTools;
                 <?php
                 // Condition isAdmin
                 if (User::isAdmin()) { ?>
-                  <li class="nav-item"><a class="nav-link" href="index.php?controller=user&action=admin">Admin</a></li>
+                  <li class="nav-item"><a class="nav-link" href="index.php?controller=admin&action=showAllUsers">Admin</a></li>
                 <?php } ?>
                 <li class="nav-item"><a class="nav-link active" href="index.php?controller=user&action=profile#mes-infos" title="Infos personnelles">Mes informations</a></li>
                 <li class="nav-item"><a class="nav-link" href="index.php?controller=user&action=profile#mes-cryptos" title="Mon tableau de bord">Mon suivi crypto.</a></li>

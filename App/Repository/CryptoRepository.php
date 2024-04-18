@@ -2,22 +2,24 @@
 
 namespace App\Repository;
 
-// use App\Entity\User;
 use App\Entity\Crypto;
 use App\Db\Mysql;
 use App\Tools\StringTools;
 
 class CryptoRepository extends Repository
 {
-  public function findOneById(int $id): Crypto|bool
+
+  // Je récupère les crypto favorites d'un utilisateur
+  public function FindAllByUserId(int $user_id): array|bool
   {
-    $query = $this->pdo->prepare("SELECT * FROM crypto WHERE id = :id");
-    $query->bindParam(':id', $id, $this->pdo::PARAM_STR);
+    // Je fais une requête SQL sur la table associative user_crypto pour récupérer les cryptos favorites d'un utilisateur
+    $query = $this->pdo->prepare("SELECT * FROM crypto g LEFT JOIN crypto_user u ON g.id = u.crypto_id WHERE u.user_id = :user_id");
+    $query->bindParam(':user_id', $user_id, $this->pdo::PARAM_STR);
     $query->execute();
-    $cryptoData = $query->fetch($this->pdo::FETCH_ASSOC);
-    if ($cryptoData) {
-      // J'utilise ici la méthode Static createAndHydrate() de la classe Crypto
-      return crypto::createAndHydrate($cryptoData);
+    $user_favorites = $query->fetchAll($this->pdo::FETCH_ASSOC);
+    if ($user_favorites) {
+      //
+      return $user_favorites;
     } else {
       return false;
     }

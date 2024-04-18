@@ -25,6 +25,15 @@ class Controller
             $controller = new UserController();
             $controller->route();
             break;
+          case 'crypto':
+            $controller = new CryptoController();
+            $controller->route();
+            break;
+          case 'admin':
+            $controller = new AdminController();
+            $controller->route();
+            break;
+
           default:
             throw new \Exception("Le contrôleur n'existe pas");
             break;

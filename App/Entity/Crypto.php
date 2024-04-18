@@ -30,25 +30,4 @@ class Crypto extends Entity
 
     return $this;
   }
-
-
-
-  // public function getDataFromApi(string $currency): array|bool
-  // {
-  //   $url = 'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=' . $currency . '&tsyms=EUR';
-  //   $data = json_decode(file_get_contents($url), true);
-
-  //   return $data['RAW'][$currency]['EUR'];
-  // }
-
-  // A voir si utile ???
-  // public function getVariationClass(): string
-  // {
-  //   if ($this->daily_variation > 0) {
-  //     return 'text-success';
-  //   } else {
-  //     return 'text-danger';
-  //   }
-  // }
-
 }

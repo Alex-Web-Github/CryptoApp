@@ -32,6 +32,9 @@
               <div class="tab-pane active bg-primary" id="home" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                 <figure class="col-12 col-sm-6 figure ">
                   <img src="..." class="figure-img img-fluid rounded bg-dark" alt="Graphique du cours sur 24h">
+
+                  <canvas id="myChart"></canvas>
+
                   <figcaption class="figure-caption">ici, la légende du graphique du cours sur 24H</figcaption>
                 </figure>
               </div>

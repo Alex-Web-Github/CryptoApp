@@ -3,7 +3,7 @@
     <div class="my-md-5 m-0 text-center text-md-start">
       <!-- <h2 class="display-6 fw-bolder mb-2">Mes crypto. favorites</h2> -->
 
-      <table class="my-4 table table-dark ">
+      <table class="my-4 table table-dark table-stripped">
         <thead>
           <tr>
             <!-- <th scope="col">#</th> -->
@@ -16,6 +16,7 @@
         <tbody>
 
           <?php
+
           // Je vérifie si la liste des cryptos favorites de l'utilisateur n'est pas vide
           if (isset($cryptoDataList) && !empty($cryptoDataList)) {
             // Ici je boucle sur les données des cryptos favorites de l'utilisateur pour les afficher dans le tableau
@@ -39,7 +40,7 @@
                 <th scope="row"><span class="px-1"><img class="img-fluid" src="https://www.cryptocompare.com<?= $cryptoLogo ?>" width="30px" height="30px" alt="logo crypto"></span><?= $cryptoSymbol ?></th>
                 <td><?= $cryptoPrice ?></td>
                 <td><?= $cryptoDailyVariation ?></td>
-                <td><a href="index.php?controller=user&action=profile&name=<?= $cryptoSymbol ?>">Voir + </a></td>
+                <td><a href="index.php?controller=crypto&action=showChart&name=<?= $cryptoSymbol ?>">Voir + </a></td>
               </tr>
             <?php
             }

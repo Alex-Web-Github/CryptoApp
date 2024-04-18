@@ -9,7 +9,22 @@ use App\Tools\StringTools;
 class UserRepository extends Repository
 {
 
-  public function findOneById(int $id)
+  public function findAll(): array
+  {
+    $query = $this->pdo->prepare("SELECT * FROM user");
+    // $query->bindParam(':role', 'user', $this->pdo::PARAM_STR);
+    $query->execute();
+    $users = $query->fetchAll($this->pdo::FETCH_ASSOC);
+    $usersList = [];
+    // On hydrate les objets User
+    foreach ($users as $user) {
+      // Je stocke chaque objet User dans un tableau
+      $usersList[] = User::createAndHydrate($user);
+    }
+    return $usersList;
+  }
+
+  public function findOneById(int $id): User|bool
   {
     $query = $this->pdo->prepare("SELECT * FROM user WHERE id = :id");
     $query->bindParam(':id', $id, $this->pdo::PARAM_STR);
@@ -21,7 +36,8 @@ class UserRepository extends Repository
       return false;
     }
   }
-  public function findOneByEmail(string $email)
+
+  public function findOneByEmail(string $email): User|bool
   {
     $query = $this->pdo->prepare("SELECT * FROM user WHERE email = :email");
     $query->bindParam(':email', $email, $this->pdo::PARAM_STR);
@@ -34,7 +50,7 @@ class UserRepository extends Repository
     }
   }
 
-  public function delete(User $user)
+  public function delete(User $user): bool
   {
     if ($user->getId() !== null) {
       $query = $this->pdo->prepare(
@@ -46,7 +62,7 @@ class UserRepository extends Repository
     }
   }
 
-  public function persist(User $user)
+  public function persist(User $user): bool
   {
 
     if ($user->getId() !== null) {
