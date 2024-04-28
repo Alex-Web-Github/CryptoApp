@@ -19,7 +19,7 @@ class AdminController extends Controller
 
       if (isset($_GET['action'])) {
         switch ($_GET['action']) {
-          case 'showAllUsers':
+          case 'dashboard':
             $this->showAllUsers();
             break;
           case 'deleteUser':

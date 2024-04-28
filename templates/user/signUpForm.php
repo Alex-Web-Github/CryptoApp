@@ -12,7 +12,7 @@
 
         <div class="col-md-6">
           <label for="first_name" class="form-label text-white">Prénom</label>
-          <input type="text" class="form-control <?= (isset($errors['first_name']) ? 'is-invalid' : '') ?>" id="first_name" name="first_name" value="<?= isset($_SESSION['user']) ? $_SESSION['user']['first_name'] : '' ?>">
+          <input type="text" class="form-control <?= (isset($errors['first_name']) ? 'is-invalid' : '') ?>" id="first_name" name="first_name" value="<?= isset($_POST['first_name']) ? $_POST['first_name'] : '' ?>">
           <?php if (isset($errors['first_name'])) { ?>
             <div class="invalid-feedback"><?= $errors['first_name'] ?></div>
           <?php } ?>
@@ -20,7 +20,7 @@
 
         <div class="col-md-6">
           <label for="last_name" class="form-label text-white">Nom</label>
-          <input type="text" class="form-control <?= (isset($errors['last_name']) ? 'is-invalid' : '') ?>" id="last_name" name="last_name" value="<?= isset($_SESSION['user']) ? $_SESSION['user']['last_name'] : '' ?>">
+          <input type="text" class="form-control <?= (isset($errors['last_name']) ? 'is-invalid' : '') ?>" id="last_name" name="last_name" value="<?= isset($_POST['last_name']) ? $_POST['last_name'] : '' ?>">
           <?php if (isset($errors['last_name'])) { ?>
             <div class="invalid-feedback"><?= $errors['last_name'] ?></div>
           <?php } ?>
@@ -28,7 +28,7 @@
 
         <div class="col-md-6">
           <label for="birth_date" class="form-label text-white">Date de naissance</label>
-          <input type="date" class="form-control <?= (isset($errors['birth_date']) ? 'is-invalid' : '') ?>" id="birth_date" name="birth_date" value="<?= isset($_SESSION['user']) ? $_SESSION['user']['birth_date'] : '' ?>">
+          <input type="date" class="form-control <?= (isset($errors['birth_date']) ? 'is-invalid' : '') ?>" id="birth_date" name="birth_date" value="<?= isset($_POST['birth_date']) ? $_POST['birth_date'] : '' ?>">
           <?php if (isset($errors['birth_date'])) { ?>
             <div class="invalid-feedback"><?= $errors['birth_date'] ?></div>
           <?php } ?>
@@ -36,7 +36,7 @@
 
         <div class="col-md-6">
           <label for="email" class="form-label text-white">E-mail</label>
-          <input type="email" class="form-control <?= (isset($errors['email']) ? 'is-invalid' : '') ?>" id="email" name="email" value="<?= isset($_SESSION['user']) ? $_SESSION['user']['email'] : '' ?>">
+          <input type="email" class="form-control <?= (isset($errors['email']) ? 'is-invalid' : '') ?>" id="email" name="email" value="<?= isset($_POST['email']) ? $_POST['email'] : '' ?>">
           <?php if (isset($errors['email'])) { ?>
             <div class="invalid-feedback"><?= $errors['email'] ?></div>
           <?php } ?>
@@ -44,9 +44,17 @@
 
         <div class="col-md-6">
           <label for="user_name" class="form-label text-white">Nom d'utilisateur</label>
-          <input type="text" class="form-control <?= (isset($errors['user_name']) ? 'is-invalid' : '') ?>" id="user_name" name="user_name" value="<?= isset($_SESSION['user']) ? $_SESSION['user']['user_name'] : '' ?>">
+          <input type="text" class="form-control <?= (isset($errors['user_name']) ? 'is-invalid' : '') ?>" id="user_name" name="user_name" value="<?= isset($_POST['user_name']) ? $_POST['user_name'] : '' ?>">
           <?php if (isset($errors['user_name'])) { ?>
             <div class="invalid-feedback"><?= $errors['user_name'] ?></div>
+          <?php } ?>
+        </div>
+
+        <div class="col-md-6">
+          <label for="password" class="form-label text-white">Mot de passe</label>
+          <input type="text" class="form-control <?= (isset($errors['password']) ? 'is-invalid' : '') ?>" id="password" name="password" value="<?= isset($_POST['password']) ? $_POST['password'] : '' ?>">
+          <?php if (isset($errors['password'])) { ?>
+            <div class="invalid-feedback"><?= $errors['password'] ?></div>
           <?php } ?>
         </div>
 

@@ -1,9 +1,9 @@
 <div class="row gx-5 align-items-center justify-content-center">
   <div class="col">
-    <div class="my-md-5 m-0 text-center text-md-start">
+    <div class="table-responsive my-md-5 m-0 text-center text-md-start">
       <!-- <h2 class="display-6 fw-bolder mb-2">Mes crypto. favorites</h2> -->
 
-      <table class="my-4 table table-dark table-striped">
+      <table class="my-4 table table-dark table-hover table-striped">
         <thead>
           <tr>
             <th scope="col">Id</th>

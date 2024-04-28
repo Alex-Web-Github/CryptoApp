@@ -12,45 +12,47 @@
         </div>
       </div>
 
-      <!-- Section avec les infos du Profil utilisateur -->
+      <!-- Section avec les graphiques de la crypto sélectionnée -->
       <section class="py-5" id="infos">
-        <div class="container px-5 bg-light rounded-3">
+        <div class="container px-1 px-sm-5 bg-light rounded-3">
           <div class="d-flex flex-column py-5 align-items-center justify-content-between">
 
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <!-- Onglets de navigation -->
+            <ul class="nav nav-pills " id="myTab" role="tablist">
               <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Graphique du cours sur 24h</button>
+                <button class="nav-link active" id="dailyTrend-tab" data-bs-toggle="tab" data-bs-target="#dailyTrend" type="button" role="tab" aria-controls="dailyTrend" aria-selected="true">Cours sur 24 heures</button>
               </li>
               <li class="nav-item" role="presentation">
-                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Trading View</button>
+                <button class="nav-link" id="tradingView-tab" data-bs-toggle="tab" data-bs-target="#tradingView" type="button" role="tab" aria-controls="tradingView" aria-selected="false">Trading View</button>
               </li>
             </ul>
 
-            <!-- Tab panes -->
-            <div class="tab-content row w-75 gx-3 my-4">
-              <div class="tab-pane active bg-primary" id="home" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-                <figure class="col-12 col-sm-6 figure ">
-                  <img src="..." class="figure-img img-fluid rounded bg-dark" alt="Graphique du cours sur 24h">
+            <div class="tab-content row w-100 gx-3 my-4">
 
-                  <canvas id="myChart"></canvas>
+              <!-- Graphe 1 -->
+              <div class="tab-pane active chart-container" id="dailyTrend" role="tabpanel" aria-labelledby="dailyTrend-tab" tabindex="0">
 
-                  <figcaption class="figure-caption">ici, la légende du graphique du cours sur 24H</figcaption>
-                </figure>
+                <canvas id="cryptoPriceChart" aria-label="Le cours de la cryptomonnaie sur 24h" role="img"></canvas>
+
               </div>
-              <div class="tab-pane bg-secondary" id="profile" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-                <figure class="col-12 col-sm-6 figure ">
-                  <img src="..." class="figure-img img-fluid rounded bg-dark" alt="Trading View">
-                  <figcaption class="figure-caption">ici, la légende du graphique Trading View</figcaption>
-                </figure>
+              <!-- Graphe 1 -->
+
+              <!-- Graphe 2 -->
+              <div class="tab-pane chart-container" id="tradingView" role="tabpanel" aria-labelledby="tradingView-tab" tabindex="0">
+
+                <canvas id="tradingViewChart" aria-label="La vue Trading View" role="img"></canvas>
+
               </div>
+              <!-- Graphe 2 -->
 
             </div>
-
           </div>
         </div>
       </section>
 
     </div>
+
+    <script src="/assets/js/cryptoChart.js"></script>
+
 
     <?php require_once _TEMPLATEPATH_ . '/footer.php'; ?>

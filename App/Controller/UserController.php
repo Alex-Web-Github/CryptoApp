@@ -62,14 +62,14 @@ class UserController extends Controller
         // Puis on attribue, par défaut, l'avatar "avatar-default.jpg" à l'utilisateur
         // $user->setAvatar(DEFAULT_AVATAR);
 
-        // méthode validate() : permet de vérifier si les données sont valides
+        // Méthode validate() : permet de vérifier si les données sont valides
         $errors = $user->validate();
 
         if (empty($errors)) {
           // Si il n'y a pas d'erreurs, alors on enregistre l'utilisateur en BDD
           $userRepository = new UserRepository();
 
-          // persist() : permet de créer ou modifier un utilisateur suivant si Id renseignée ("User" déjà enregistré) ou non en BDD
+          // La méthode persist() permet de créer ou modifier un utilisateur suivant si Id renseignée ("User" déjà enregistré) ou non en BDD
           // voir dans App\Repository\UserRepository;
           $userRepository->persist($user);
 
@@ -79,8 +79,7 @@ class UserController extends Controller
       }
 
       // Pour afficher le formulaire de création d'un utilisateur
-      $this->render('user/signUp', [
-        // 'pageTitle' => '',
+      $this->render('user/signUpForm', [
         // On passe les erreurs à la View pour pouvoir les afficher dans le formulaire le cas échéant
         'errors' => $errors
       ]);
@@ -91,7 +90,7 @@ class UserController extends Controller
     }
   }
 
-  // Mettre à jour un Utilisateur 
+  // Mettre à jour les données depuis la page Profil d'un Utilisateur 
   protected function updateUser()
   {
     try {
@@ -99,8 +98,7 @@ class UserController extends Controller
       $user = new User();
 
       if (isset($_POST['updateUser'])) {
-        // Si il y a soumission de formulaire, alors hydrater l'objet User avec les données du formulaire
-        // voir dans App\Entity;
+        // Si il y a soumission de formulaire, alors hydrater l'objet User avec les données du formulaire (voir la méthode dans App\Entity)
         $user->hydrate($_POST);
         // Puis je récupère l'id de l'utilisateur connecté
         $user->setId($_SESSION['user']['id']);
@@ -115,10 +113,12 @@ class UserController extends Controller
 
           // Regénère l'id de Session pour éviter la "fixation de session"
           session_regenerate_id(true);
+
           // Puis on met à jour les données de session
           $_SESSION['user'] = [
             'id' => $user->getId(),
             'email' => $user->getEmail(),
+            // 'password' => $user->getPassword(),
             'first_name' => $user->getFirstName(),
             'last_name' => $user->getLastName(),
             'user_name' => $user->getUserName(),
@@ -130,10 +130,11 @@ class UserController extends Controller
           // Enfin on redirige vers la page Profile
           header('Location: index.php?controller=user&action=profile');
         }
+        var_dump($user);
       }
 
       // Pour afficher le formulaire de modification d'un compte utilisateur
-      $this->render('user/update', [
+      $this->render('user/updateForm', [
         'errors' => $errors
       ]);
     } catch (\Exception $e) {

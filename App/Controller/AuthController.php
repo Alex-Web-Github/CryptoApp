@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Db\Mysql;
+use App\Entity\User;
 use App\Repository\UserRepository;
 
 class AuthController extends Controller
@@ -40,13 +41,12 @@ class AuthController extends Controller
     if (isset($_POST['loginUser'])) {
 
       $userRepository = new UserRepository();
-      // 
+      // Je récupère l'utilisateur qui correspond à l'email
       $user = $userRepository->findOneByEmail($_POST['email']);
 
-      // Je vérifie si le user_name qui correspond à l'email est correct
-      if ($user && $_POST['user_name'] == $user->getUserName()) {
-
-        var_dump($_SESSION['user']);
+      // Je vérifie si le mot de passe qui correspond à l'email est correct
+      // Voir la méthode verifyPassword dans App/Entity/User.php
+      if ($user && $user->verifyPassword($_POST['password'])) {
 
         // Regénère l'id de Session pour éviter la "fixation de session"
         session_regenerate_id(true);
@@ -54,6 +54,7 @@ class AuthController extends Controller
         $_SESSION['user'] = [
           'id' => $user->getId(),
           'email' => $user->getEmail(),
+          'password' => $user->getPassword(),
           'first_name' => $user->getFirstName(),
           'last_name' => $user->getLastName(),
           'user_name' => $user->getUserName(),
@@ -62,8 +63,13 @@ class AuthController extends Controller
           // 'avatar' => $user->getAvatar(),
         ];
 
-        // header('location: index.php');
-        header('location: index.php?controller=user&action=profile');
+        if (User::isUser()) {
+          // Si l'utilisateur est un utilisateur, on le redirige vers son profil
+          header('location: index.php?controller=user&action=profile');
+        } else if (User::isAdmin()) {
+          // Si l'utilisateur est un admin, on le redirige vers le dashboard
+          header('location: index.php?controller=admin&action=dashboard');
+        }
       } else {
         $errors[] = 'Email ou nom d\'utilisateur incorrect';
       }

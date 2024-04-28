@@ -1,49 +1,7 @@
-/* VOIR SI ON GARDE OU PAS ... */
-
-body {
-	/* font-family: 'Times New Roman' !important;
-  font-size: 24px !important;
-	line-height: 1.42857143;
-	color: #333;  */
-}
-
-/* Rating */
-* {
-	margin: 0;
-	padding: 0;
-}
-.rate {
-	float: left;
-	height: 46px;
-	padding: 0 10px;
-}
-
-.rate input[type='radio'] {
-	display: none;
-}
-.rate:not(:checked) > label {
-	float: right;
-	width: 1em;
-	overflow: hidden;
-	white-space: nowrap;
-	cursor: pointer;
-	font-size: 30px;
-	color: #ccc;
-}
-.rate:not(:checked) > label:before {
-	content: '★ ';
-}
-.rate > input:checked ~ label {
-	color: #ffc700;
-}
-.rate.enabled:not(:checked) > label:hover,
-.rate.enabled:not(:checked) > label:hover ~ label {
-	color: #deb217;
-}
-.rate.enabled > input:checked + label:hover,
-.rate.enabled > input:checked + label:hover ~ label,
-.rate.enabled > input:checked ~ label:hover,
-.rate.enabled > input:checked ~ label:hover ~ label,
-.rate.enabled > label:hover ~ input:checked ~ label {
-	color: #c59b08;
+/* CSS du container des graphiques chartJS */
+.chart-container {
+	position: relative;
+	margin: auto;
+	height: 80vh;
+	width: 80vw;
 }

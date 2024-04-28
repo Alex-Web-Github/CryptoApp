@@ -8,14 +8,15 @@ class User extends Entity
 
   protected ?int $id = null;
   protected ?string $email = '';
+  protected ?string $password = '';
   protected ?string $first_name = '';
   protected ?string $last_name = '';
   protected ?string $birth_date = '';
   protected ?string $user_name = '';
   protected ?string $role = '';
   // protected ?string $avatar = '';
-  // protected ?string $password = '';
 
+  // Remarque : "?int" signifie que le type retourné est de type int ou null
   public function getId(): ?int
   {
     return $this->id;
@@ -36,17 +37,17 @@ class User extends Entity
     return $this;
   }
 
-  // public function getPassword(): ?string
-  // {
-  //   return $this->password;
-  // }
+  public function getPassword(): ?string
+  {
+    return $this->password;
+  }
 
-  // public function setPassword(?string $password): self
-  // {
-  //   $this->password = $password;
+  public function setPassword(?string $password): self
+  {
+    $this->password = $password;
 
-  //   return $this;
-  // }
+    return $this;
+  }
 
   public function getFirstName(): ?string
   {
@@ -181,23 +182,23 @@ class User extends Entity
     } else if ($this->getBirthDate() > date('Y-m-d')) {
       $errors['birth_date'] = 'La date de naissance n\'est pas valide';
     }
-    // if (empty($this->getPassword())) {
-    //   $errors['password'] = 'Le champ mot de passe ne doit pas être vide';
-    // }
+    if (empty($this->getPassword())) {
+      $errors['password'] = 'Le champ mot de passe ne doit pas être vide';
+    }
     return $errors;
   }
 
   /*
         Pourrait être déplacé dans une classe Security
     */
-  // public function verifyPassword(string $password): bool
-  // {
-  //   if (password_verify($password, $this->password)) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
+  public function verifyPassword(string $password): bool
+  {
+    if (password_verify($password, $this->password)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   /*
         Pourrait être déplacé dans une classe Security

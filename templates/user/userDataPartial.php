@@ -18,8 +18,8 @@
       </div>
       <div class="gap-4 d-flex flex-column flex-sm-row mt-4 ">
         <a class="btn btn-primary btn-sm px-4 me-sm-3" href="index.php?controller=user&action=update">Modifier mon profil</a>
+
         <?php
-        // 
         if ($_SESSION['user']['role'] === 'user') { ?>
           <a class="btn btn-outline-dark btn-sm px-4" href="index.php?controller=user&action=delete">Supprimer mon profil</a>
         <?php } ?>
@@ -28,5 +28,5 @@
   </div>
 
   <!-- Affichage de l'Avatar -->
-  <div class="col-12 col-sm-4 col-md-3 col-xl-2   offset-xl-1 order-first order-md-2"><img class="img-fluid w-100 rounded-3  my-5" src="assets/img/default-avatar.svg" alt="avatar" /></div>
+  <div class="col-12 col-sm-4 col-md-3 col-xl-2 offset-xl-1 order-first order-md-2"><img class="img-fluid w-100 rounded-3 my-5" src="assets/img/default-avatar.svg" alt="avatar" /></div>
 </div>
