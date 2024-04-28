@@ -194,6 +194,8 @@ class UserController extends Controller
       ]);
     }
   }
+
+  // Afficher le Profil d'un Utilisateur
   protected function profile()
   {
     try {
@@ -233,8 +235,9 @@ class UserController extends Controller
       // Pour afficher la page "Profil" d'un utilisateur
       $this->render('user/profile', [
         'errors' => $errors,
-        // Je passe le tableau des cryptos favorites de l'utilisateur dans le template "favorites-partial.php" sous forme de tableau associatif $cryptoDataList
+        // Je passe le tableau des cryptos favorites de l'utilisateur dans le template "favorites-partial.php" sous la forme d'un tableau associatif
         'cryptoDataList' => $cryptoDataList,
+        'favoriteCrypto' => $favoriteCrypto,
       ]);
     } catch (\Exception $e) {
       $this->render('errors/default', [
@@ -242,38 +245,40 @@ class UserController extends Controller
       ]);
     }
   }
-  protected function infoCrypto()
-  {
-    try {
-      $errors = [];
-      $user = new User();
-      // si l'utilisateur est connecté (voir App\Entity\User.php pour la méthode isLogged()
-      if ($user::isLogged()) {
-        // Récupérer l'id de l'utilisateur connecté
-        $user_id = $_SESSION['user']['id'];
 
-        // Je récupère le nom de la crypto favorite de l'utilisateur
-        $cryptoName = $_GET['name'];
+  // Afficher les informations d'une crypto favorite de l'utilisateur
+  // protected function infoCrypto()
+  // {
+  //   try {
+  //     $errors = [];
+  //     $user = new User();
 
-        $cryptoRepository = new CryptoRepository();
+  //     if ($user::isLogged()) {
+  //       // Récupérer l'id de l'utilisateur connecté
+  //       $user_id = $_SESSION['user']['id'];
 
-        // Je récupère les données de la crypto avec l'API cryptocompare.com (en EUR)
-        $cryptoData = $cryptoRepository->getDataApiFromCurrency($cryptoName);
+  //       // Je récupère le nom de la crypto favorite de l'utilisateur
+  //       $cryptoName = $_GET['name'];
 
-        // Pour afficher la page "Profil" d'une crypto favorite de l'utilisateur
-        $this->render('crypto/info-crypto', [
-          'errors' => $errors,
-          'cryptoData' => $cryptoData,
-        ]);
-      } else {
-        throw new \Exception("Votre session a expiré, veuillez vous reconnecter.");
-        // Enfin on redirige vers la page de login
-        // header('Location: index.php?controller=auth&action=login');
-      }
-    } catch (\Exception $e) {
-      $this->render('errors/default', [
-        'error' => $e->getMessage()
-      ]);
-    }
-  }
+  //       $cryptoRepository = new CryptoRepository();
+
+  //       // Je récupère les données de la crypto avec l'API cryptocompare.com (en EUR)
+  //       $cryptoData = $cryptoRepository->getDataApiFromCurrency($cryptoName);
+
+  //       // Pour afficher la page "Profil" d'une crypto favorite de l'utilisateur
+  //       $this->render('crypto/info-crypto', [
+  //         'errors' => $errors,
+  //         'cryptoData' => $cryptoData,
+  //       ]);
+  //     } else {
+  //       throw new \Exception("Votre session a expiré, veuillez vous reconnecter.");
+  //       // Enfin on redirige vers la page de login
+  //       // header('Location: index.php?controller=auth&action=login');
+  //     }
+  //   } catch (\Exception $e) {
+  //     $this->render('errors/default', [
+  //       'error' => $e->getMessage()
+  //     ]);
+  //   }
+  // }
 }

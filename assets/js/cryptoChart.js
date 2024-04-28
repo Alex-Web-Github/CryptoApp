@@ -18,7 +18,6 @@ Donc, en résumé, cette URL est utilisée pour obtenir les données des prix de
 */
 
 /****
-cryptoChart.js : 
 Ce fichier contient le code JavaScript pour afficher des graphiques de prix de crypto - monnaies sur une page Web.
 
 Dans ce fichier, j'utilise l'API Fetch pour récupérer les données des prix des crypto - monnaies à partir de l'API CryptoCompare. J'utilise ensuite la bibliothèque Chart.js pour afficher ces données sous forme de graphiques.
@@ -29,15 +28,8 @@ Dans ce fichier, j'utilise l'API Fetch pour récupérer les données des prix de
 let urlParams = new URLSearchParams(window.location.search);
 let currency = urlParams.get('name');
 
-// Je récupère le tableau contenant les différentes crypto-monnaies
-let cryptoCurrencies = ['BTC', 'ETH', 'XRP', 'LTC', 'BCH', 'ADA', 'DOT', 'LINK', 'BNB', 'XLM', 'USDT', 'USDC', 'WBTC', 'BSV', 'EOS', 'TRX', 'XMR', 'XTZ', 'MIOTA', 'VET', 'DASH', 'ETC', 'NEO', 'ZEC', 'DOGE', 'ATOM', 'ALGO', 'ZRX', 'OMG', 'QTUM', 'LSK', 'BAT', 'KNC', 'COMP', 'SNX', 'YFI', 'REN', 'UMA', 'SUSHI', 'MKR', 'AAVE', 'UNI', 'CRV', 'BAL', 'YFII', 'RUNE', 'SOL', 'BAND', 'OCEAN', 'RLC', 'BNT', 'REP'];
-
-// Si le paramètre passé dans l'URL n'est pas une crypto-monnaie valide : message d'erreur
-if (!cryptoCurrencies.includes(currency)) {
-  document.getElementById('dailyTrend').innerHTML = '<div class="alert alert-danger">Erreur : Crypto-monnaie non valide</div>';
-}
-
-// Si le paramètre passé dans l'URL est une crypto-monnaie valide : affichage des graphiques
+// Le paramètre passé dans l'URL est bien une crypto-monnaie valide (validation préalable en PHP)
+// Je peux afficher les graphiques
 
 // GRAPHE 1 :
 // Pour afficher le cours d'une monnaie sur les 24 dernières heures selon le paramètre passé dans l'URL

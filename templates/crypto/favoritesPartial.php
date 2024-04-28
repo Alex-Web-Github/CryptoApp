@@ -40,7 +40,9 @@
                 <th scope="row"><span class="px-1"><img class="img-fluid" src="https://www.cryptocompare.com<?= $cryptoLogo ?>" width="30px" height="30px" alt="logo crypto"></span><?= $cryptoSymbol ?></th>
                 <td><?= $cryptoPrice ?></td>
                 <td><?= $cryptoDailyVariation ?></td>
-                <td><a href="index.php?controller=crypto&action=showChart&name=<?= $cryptoSymbol ?>">Voir + </a></td>
+                <td><a href="index.php?controller=crypto&action=showChart&name=<?= $cryptoSymbol ?>">Voir + </a>
+                  <a class="ms-2" href="index.php?controller=crypto&action=deleteFavorite&name=<?= $favoriteCrypto['crypto_id'] ?>&user=<?= $favoriteCrypto['user_id'] ?>">Supprimer</a>
+                </td>
               </tr>
             <?php
             }
