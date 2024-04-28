@@ -63,7 +63,6 @@ class CryptoController extends Controller
     }
   }
 
-
   // Supprimer une crypto favorite d'un utilisateur dans la table crypto_user
   protected function deleteFavorite()
   {
@@ -98,4 +97,41 @@ class CryptoController extends Controller
       ]);
     }
   }
+
+  // Pour insérer une crypto favorite d'un utilisateur dans la table crypto_user
+  // A TESTER !!!
+
+  // protected function insertFavorite()
+  // {
+  //   try {
+  //     $errors = [];
+
+  //     if (isset($_GET['name']) && !empty($_GET['name']) && User::isLogged() === true) {
+
+  //       $cryptoName = $_GET['name'];
+
+  //       $user_id = User::getCurrentUserId();
+  //       if (!is_numeric($user_id)) {
+  //         throw new \Exception("L'identifiant de l'utilisateur n'est pas valide");
+  //       }
+
+  //       $cryptoRepository = new CryptoRepository();
+
+  //       $insertFavorite = $cryptoRepository->insertFavoriteCryptoByUserId($user_id, $cryptoName);
+
+  //       header('Location: index.php?controller=user&action=profile');
+  //     } else {
+  //       throw new \Exception("L'action demandée est impossible");
+  //     }
+
+  //     $this->render('crypto/infoCrypto', [
+  //       'errors' => $errors,
+
+  //     ]);
+  //   } catch (\Exception $e) {
+  //     $this->render('errors/default', [
+  //       'error' => $e->getMessage()
+  //     ]);
+  //   }
+  // }
 }

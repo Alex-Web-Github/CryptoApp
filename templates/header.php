@@ -35,14 +35,18 @@ use App\Tools\NavigationTools;
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+              <li class="nav-item"><a class="nav-link <?= NavigationTools::addActiveClass('page', 'home') ?>" href="/">Accueil</a>
+              </li>
+
               <?php
               // Condition isAdmin
               if (User::isAdmin()) { ?>
-                <li class="nav-item"><a class="nav-link" href="index.php?controller=admin&action=dashboard">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link <?= NavigationTools::addActiveClass('admin', 'dashboard') ?>" href="index.php?controller=admin&action=dashboard">Dashboard</a></li>
               <?php }
 
               if (User::isUser()) { ?>
-                <li class="nav-item"><a class="nav-link" href="index.php?controller=user&action=profile#mes-infos" title="Infos personnelles">Mes informations</a></li>
+                <li class="nav-item"><a class="nav-link <?= NavigationTools::addActiveClass('user', 'profile') ?>" href="index.php?controller=user&action=profile#mes-infos" title="Infos personnelles">Mes informations</a></li>
                 <li class="nav-item"><a class="nav-link" href="index.php?controller=user&action=profile#mes-cryptos" title="Mon tableau de bord">Mon suivi crypto.</a></li>
               <?php } ?>
 
@@ -56,7 +60,7 @@ use App\Tools\NavigationTools;
                   </a>
                 </li>
               <?php } else { ?>
-                <li class="nav-item"><a class="nav-link" href="index.php?controller=auth&action=login" title="Connexion">Connexion
+                <li class="nav-item"><a class="nav-link <?= NavigationTools::addActiveClass('auth', 'login') ?>" href="index.php?controller=auth&action=login" title="Connexion">Connexion
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
                       <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
                       <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />

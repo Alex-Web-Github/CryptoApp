@@ -36,9 +36,7 @@ class CryptoRepository extends Repository
   }
 
 
-
   // Pour supprimer une crypto favorite suivant l'Id d'un utilisateur
-  // A TESTER !!!
   public function deleteFavoriteCryptoByUserId(int $user_id, int $crypto_id): bool
   {
     // Je fais une requête SQL pour supprimer une crypto favorite d'un utilisateur
