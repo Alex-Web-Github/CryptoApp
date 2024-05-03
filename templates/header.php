@@ -13,8 +13,8 @@ use App\Tools\NavigationTools;
   <meta name="description" content="Enfin une application de gestion intuitive pour suivre vos cryptos et gérer facilement vos gains" />
   <title>Mon application CryptoApp</title>
   <!-- Favicon-->
-  <link rel="icon" type="image/x-icon" href="favicon.ico" />
-  <!-- Core theme CSS (includes Bootstrap)-->
+  <link rel="icon" type="image/x-icon" href="faviconMyCrypto.png" />
+  <!-- CSS (includes Bootstrap)-->
   <link rel="stylesheet" href="assets/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/css/override-bootstrap.css">
   <link rel="stylesheet" href="assets/css/custom.css">
@@ -27,7 +27,7 @@ use App\Tools\NavigationTools;
     <!-- Header-->
     <header>
       <!-- Navigation-->
-      <nav class="navbar navbar-expand-md navbar-dark">
+      <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container px-5">
           <a class="navbar-brand" href="/">
             <img src="assets/img/Logo-MyCrypto.svg" alt="Logo" width="50" height="50" class="d-inline-block me-1">My CryptoApp</a>
@@ -35,7 +35,6 @@ use App\Tools\NavigationTools;
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-
               <li class="nav-item"><a class="nav-link <?= NavigationTools::addActiveClass('page', 'home') ?>" href="/">Accueil</a>
               </li>
 
@@ -44,13 +43,13 @@ use App\Tools\NavigationTools;
               if (User::isAdmin()) { ?>
                 <li class="nav-item"><a class="nav-link <?= NavigationTools::addActiveClass('admin', 'dashboard') ?>" href="index.php?controller=admin&action=dashboard">Dashboard</a></li>
               <?php }
-
-              if (User::isUser()) { ?>
-                <li class="nav-item"><a class="nav-link <?= NavigationTools::addActiveClass('user', 'profile') ?>" href="index.php?controller=user&action=profile#mes-infos" title="Infos personnelles">Mes informations</a></li>
-                <li class="nav-item"><a class="nav-link" href="index.php?controller=user&action=profile#mes-cryptos" title="Mon tableau de bord">Mon suivi crypto.</a></li>
-              <?php } ?>
-
-              <?php if (User::isLogged()) { ?>
+              if (User::isLogged()) { ?>
+                <li class="nav-item">
+                  <a class="nav-link <?= NavigationTools::addActiveClass('user', 'profile') ?>" href="index.php?controller=user&action=profile#mes-infos" title="Infos personnelles">Mes informations</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="index.php?controller=user&action=profile#mes-cryptos" title="Mon tableau de bord">Mon suivi crypto.</a>
+                </li>
                 <li class="nav-item">
                   <a class="nav-link" href="index.php?controller=auth&action=logout" title="Déconnexion">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">

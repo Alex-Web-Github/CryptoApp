@@ -1,5 +1,6 @@
     <?php require_once _TEMPLATEPATH_ . '/header.php'; ?>
 
+
     <div class="mt-md-5 py-5">
 
       <div class="container px-5">
@@ -18,7 +19,7 @@
         <div class="container p-5 bg-light rounded-3">
           <h2 class="display-6 fw-bolder text-center my-2">Mes informations</h2>
 
-          <?php require_once _TEMPLATEPATH_ . '/user/userDataPartial.php'; ?>
+          <?php require _TEMPLATEPATH_ . '/user/userDataPartial.php'; ?>
         </div>
       </section>
 
@@ -27,7 +28,7 @@
         <div class="container p-5 bg-light rounded-3">
           <h2 class="display-6 fw-bolder text-center my-2">Mes crypto. favorites</h2>
 
-          <?php require_once _TEMPLATEPATH_ . '/crypto/favoritesPartial.php'; ?>
+          <?php require _TEMPLATEPATH_ . '/crypto/favoritesPartial.php'; ?>
         </div>
       </section>
     </div>

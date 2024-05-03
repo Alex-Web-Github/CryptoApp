@@ -107,7 +107,6 @@ class UserController extends Controller
 
         if (empty($errors)) {
           // Si il n'y a pas d'erreurs, alors on enregistre les modifications de l'utilisateur en BDD
-          // voir dans App\Repository\UserRepository;
           $userRepository = new UserRepository();
           $userRepository->persist($user);
 
@@ -118,7 +117,7 @@ class UserController extends Controller
           $_SESSION['user'] = [
             'id' => $user->getId(),
             'email' => $user->getEmail(),
-            // 'password' => $user->getPassword(),
+            'password' => $user->getPassword(),
             'first_name' => $user->getFirstName(),
             'last_name' => $user->getLastName(),
             'user_name' => $user->getUserName(),
@@ -130,7 +129,7 @@ class UserController extends Controller
           // Enfin on redirige vers la page Profile
           header('Location: index.php?controller=user&action=profile');
         }
-        var_dump($user);
+        // var_dump($user);
       }
 
       // Pour afficher le formulaire de modification d'un compte utilisateur
@@ -173,14 +172,14 @@ class UserController extends Controller
     }
   }
 
-  // Supprimer un Utilisateur par son Id
+  // Supprimer un Utilisateur par son Id depuis le DashboardAdmin
   protected function deleteUserById()
   {
     try {
       $errors = [];
       $user = new User();
 
-      // Puis je récupère l'id de l'utilisateur à supprimer
+      // Puis je récupère l'id de l'utilisateur depuis le DashboardAdmin
       $user->setId($_GET['id']);
 
       $userRepository = new UserRepository();
@@ -221,7 +220,7 @@ class UserController extends Controller
             // Je récupère les données de la crypto avec l'API cryptocompare.com (en EUR)
             $favoriteCryptoDataByName = ApiTools::getInformationFromApi($favoriteCryptoName);
 
-            // Je stocke les données des cryptos favorites dans un tableau clé/valeur (nom de la crypto => données de la crypto)
+            // Je stocke les données issues de l'API dans un tableau clé/valeur (nom de la crypto => données API de la crypto)
             $cryptoDataList[$favoriteCryptoName] = $favoriteCryptoDataByName;
           }
         } else {
@@ -237,7 +236,7 @@ class UserController extends Controller
         'errors' => $errors,
         // Je passe le tableau des cryptos favorites de l'utilisateur dans le template "favorites-partial.php" sous la forme d'un tableau associatif
         'cryptoDataList' => $cryptoDataList,
-        'favoriteCrypto' => $favoriteCrypto,
+        // 'favoriteCrypto' => $favoriteCrypto,
       ]);
     } catch (\Exception $e) {
       $this->render('errors/default', [
@@ -245,40 +244,4 @@ class UserController extends Controller
       ]);
     }
   }
-
-  // Afficher les informations d'une crypto favorite de l'utilisateur
-  // protected function infoCrypto()
-  // {
-  //   try {
-  //     $errors = [];
-  //     $user = new User();
-
-  //     if ($user::isLogged()) {
-  //       // Récupérer l'id de l'utilisateur connecté
-  //       $user_id = $_SESSION['user']['id'];
-
-  //       // Je récupère le nom de la crypto favorite de l'utilisateur
-  //       $cryptoName = $_GET['name'];
-
-  //       $cryptoRepository = new CryptoRepository();
-
-  //       // Je récupère les données de la crypto avec l'API cryptocompare.com (en EUR)
-  //       $cryptoData = $cryptoRepository->getDataApiFromCurrency($cryptoName);
-
-  //       // Pour afficher la page "Profil" d'une crypto favorite de l'utilisateur
-  //       $this->render('crypto/info-crypto', [
-  //         'errors' => $errors,
-  //         'cryptoData' => $cryptoData,
-  //       ]);
-  //     } else {
-  //       throw new \Exception("Votre session a expiré, veuillez vous reconnecter.");
-  //       // Enfin on redirige vers la page de login
-  //       // header('Location: index.php?controller=auth&action=login');
-  //     }
-  //   } catch (\Exception $e) {
-  //     $this->render('errors/default', [
-  //       'error' => $e->getMessage()
-  //     ]);
-  //   }
-  // }
 }

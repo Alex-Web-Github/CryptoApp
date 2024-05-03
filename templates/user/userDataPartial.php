@@ -2,7 +2,7 @@
 
   <div class="col-12 col-sm-8 col-md-8 col-xl-8 order-last order-sm-first">
     <div class="my-md-5 m-0 text-center text-md-start">
-      <!-- <h2 class="display-6 fw-bolder mb-2">Mes informations</h2> -->
+
       <div class="row g-3 m-0 my-md-4 align-items-center text-start">
 
         <div class="col-md-3 col-lg-4 col-xl-6">

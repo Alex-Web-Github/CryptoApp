@@ -20,6 +20,9 @@ class CryptoController extends Controller
           case 'deleteFavorite':
             $this->deleteFavorite();
             break;
+          case 'insertFavorite':
+            $this->insertFavorite();
+            break;
           default:
             throw new \Exception("Cette action n'existe pas : " . $_GET['action']);
             break;
@@ -33,7 +36,6 @@ class CryptoController extends Controller
       ]);
     }
   }
-
 
   // Afficher le cours d'une Crypto sur 24 heures avec chartJS
   // Voir la suite dans le fichier cryptoChart.js
@@ -54,7 +56,6 @@ class CryptoController extends Controller
 
       $this->render('crypto/infoCrypto', [
         'errors' => $errors,
-
       ]);
     } catch (\Exception $e) {
       $this->render('errors/default', [
@@ -69,28 +70,24 @@ class CryptoController extends Controller
     try {
       $errors = [];
 
-      if (isset($_GET['name']) && !empty($_GET['name']) && isset($_GET['user']) && !empty($_GET['user'])) {
+      if (isset($_GET['name']) && !empty($_GET['name']) && User::isLogged()) {
 
         $cryptoName = $_GET['name'];
-
-        $user_id = $_GET['user'];
-        if (!is_numeric($user_id) || User::isLogged() !== true) {
-          throw new \Exception("L'identifiant de l'utilisateur n'est pas valide");
-        }
+        $user_id = $_SESSION['user']['id'];
 
         $cryptoRepository = new CryptoRepository();
 
-        $deleteFavorite = $cryptoRepository->deleteFavoriteCryptoByUserId($user_id, $cryptoName);
+        $deleteFavorite = $cryptoRepository->deleteFavoriteCryptoByNameAndUserId($user_id, $cryptoName);
 
         header('Location: index.php?controller=user&action=profile');
       } else {
         throw new \Exception("L'action demandée est impossible");
       }
 
-      $this->render('crypto/infoCrypto', [
-        'errors' => $errors,
+      // $this->render('crypto/infoCrypto', [
+      //   'errors' => $errors,
 
-      ]);
+      // ]);
     } catch (\Exception $e) {
       $this->render('errors/default', [
         'error' => $e->getMessage()
@@ -98,40 +95,29 @@ class CryptoController extends Controller
     }
   }
 
-  // Pour insérer une crypto favorite d'un utilisateur dans la table crypto_user
-  // A TESTER !!!
+  // Pour insérer une crypto favorite d'un utilisateur dans la table crypto_user (Avec AJAX ...)
+  protected function insertFavorite()
+  {
+    try {
+      $errors = [];
 
-  // protected function insertFavorite()
-  // {
-  //   try {
-  //     $errors = [];
+      if (isset($_POST['name']) && !empty($_POST['name']) && User::isLogged()) {
 
-  //     if (isset($_GET['name']) && !empty($_GET['name']) && User::isLogged() === true) {
+        $crypto = $_POST['name'];
+        // Je récupère l'id de l'utilisateur connecté
+        $user_id = $_SESSION['user']['id'];
 
-  //       $cryptoName = $_GET['name'];
+        $cryptoRepository = new CryptoRepository();
 
-  //       $user_id = User::getCurrentUserId();
-  //       if (!is_numeric($user_id)) {
-  //         throw new \Exception("L'identifiant de l'utilisateur n'est pas valide");
-  //       }
-
-  //       $cryptoRepository = new CryptoRepository();
-
-  //       $insertFavorite = $cryptoRepository->insertFavoriteCryptoByUserId($user_id, $cryptoName);
-
-  //       header('Location: index.php?controller=user&action=profile');
-  //     } else {
-  //       throw new \Exception("L'action demandée est impossible");
-  //     }
-
-  //     $this->render('crypto/infoCrypto', [
-  //       'errors' => $errors,
-
-  //     ]);
-  //   } catch (\Exception $e) {
-  //     $this->render('errors/default', [
-  //       'error' => $e->getMessage()
-  //     ]);
-  //   }
-  // }
+        $cryptoRepository->insertFavoriteCryptoByNameAndUserId($user_id, $crypto);
+        // La page est rechargée depuis le script AJAX
+      } else {
+        throw new \Exception("L'action demandée est impossible");
+      }
+    } catch (\Exception $e) {
+      $this->render('errors/default', [
+        'error' => $e->getMessage()
+      ]);
+    }
+  }
 }

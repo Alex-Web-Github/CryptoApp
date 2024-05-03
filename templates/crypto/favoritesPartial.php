@@ -1,7 +1,6 @@
 <div class="row gx-5 align-items-center justify-content-center">
   <div class="col">
     <div class="table-responsive my-md-5 m-0 text-center text-md-start">
-      <!-- <h2 class="display-6 fw-bolder mb-2">Mes crypto. favorites</h2> -->
 
       <table class="my-4 table table-dark table-hover table-stripped">
         <thead>
@@ -10,12 +9,13 @@
             <th scope="col">Nom</th>
             <th scope="col">Prix</th>
             <th scope="col">Variation /24h</th>
-            <th scope="col">Action</th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
 
           <?php
+          // var_dump($cryptoDataList);
 
           // Je vérifie si la liste des cryptos favorites de l'utilisateur n'est pas vide
           if (isset($cryptoDataList) && !empty($cryptoDataList)) {
@@ -43,7 +43,7 @@
                 <td>
                   <a class="pe-4 text-warning text-decoration-none" href="index.php?controller=crypto&action=showChart&name=<?= $cryptoSymbol ?>">+ d'infos </a>
 
-                  <a class="px-4 text-warning" href="index.php?controller=crypto&action=deleteFavorite&name=<?= $favoriteCrypto['crypto_id'] ?>&user=<?= $favoriteCrypto['user_id'] ?>">
+                  <a class="px-4 text-warning" href="index.php?controller=crypto&action=deleteFavorite&name=<?= $cryptoSymbol ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-trash" viewBox="0 0 18 18">
                       <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"></path>
                       <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"></path>
@@ -62,5 +62,23 @@
 
         </tbody>
       </table>
+
+      <form method="" action="">
+        <div class="col-md-6 mb-4">
+          <select class="form-select" aria-label="" id="crypto_name" name="crypto_name">
+            <option selected>Choisir une crypto dans la liste</option>
+            <?php
+            // Je boucle sur le tableau des cryptos disponibles
+            foreach (CRYPTOCURRENCIESARRAY as $crypto) {
+              echo '<option value="' . $crypto . '">' . $crypto . '</option>';
+            }
+            ?>
+          </select>
+        </div>
+        <div class="col-md-6">
+        </div>
+
+      </form>
     </div>
   </div>
+</div>
