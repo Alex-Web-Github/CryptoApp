@@ -7,7 +7,7 @@
     <div class="mt-5 col-12 col-md-10 col-xl-8 m-auto">
       <h1 class="display-5 fw-bolder text-white text-center mb-4">Modifier son compte</h1>
 
-      <form class="row g-3 text-left mt-4" method="post" action="" enctype="multipart/form-data">
+      <form class="row g-3 text-left mt-4" method="POST" action="" enctype="multipart/form-data">
 
         <div class="col-md-6">
           <label for="first_name" class="form-label text-white">Prénom</label>
@@ -45,10 +45,10 @@
           <div class="invalid-feedback"><?= $errors['password'] ?></div>
         </div>
 
-        <!-- <div class="col-md-6">
-            <label for="avatar" class="form-label text-white">TODO -> Ajouter un Avatar</label>
-            <input type="file" class="form-control " id="avatar" name="avatar" value="">
-          </div> -->
+        <div class="col-md-6">
+          <label for="uploaded_file" class="form-label text-white">Personnaliser l'image de votre Profil </label>
+          <input type="file" class="form-control " name="uploaded_file" id="uploaded_file" value="">
+        </div>
 
         <div class="gap-4 d-flex flex-column flex-sm-row mt-4">
           <button type="submit" name="updateUser" class="btn btn-primary btn-sm px-4 me-sm-3">Je confirme les modifications</button>

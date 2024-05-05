@@ -7,6 +7,7 @@ use App\Repository\UserRepository;
 use App\Repository\CryptoRepository;
 use App\Entity\User;
 use App\API\ApiTools;
+use App\Tools\StringTools;
 
 class UserController extends Controller
 {
@@ -59,8 +60,8 @@ class UserController extends Controller
         // voir les Constantes dans config.php;
         $user->setRole(ROLE_USER);
 
-        // Puis on attribue, par défaut, l'avatar "avatar-default.jpg" à l'utilisateur
-        // $user->setAvatar(DEFAULT_AVATAR);
+        // Puis on attribue, par défaut, le nom de fichier "avatar-default.jpg" à l'utilisateur
+        $user->setAvatar(DEFAULT_AVATAR);
 
         // Méthode validate() : permet de vérifier si les données sont valides
         $errors = $user->validate();
@@ -69,8 +70,7 @@ class UserController extends Controller
           // Si il n'y a pas d'erreurs, alors on enregistre l'utilisateur en BDD
           $userRepository = new UserRepository();
 
-          // La méthode persist() permet de créer ou modifier un utilisateur suivant si Id renseignée ("User" déjà enregistré) ou non en BDD
-          // voir dans App\Repository\UserRepository;
+          // La méthode persist() permet à la fois de créer ou modifier un utilisateur suivant si un Id est renseigné (ie: Utilisateur déjà enregistré) ou non en BDD
           $userRepository->persist($user);
 
           // Puis on redirige vers la page Login
@@ -98,12 +98,127 @@ class UserController extends Controller
       $user = new User();
 
       if (isset($_POST['updateUser'])) {
+
+        // Je vérifie si le champs "avatar" est renseigné (il est facultatif dans l'updateForm) alors je le traite
+
+        // Les types MIME autorisés sont stockés dans une variable
+        $authorizedMimeTypes = [
+          'png' => 'image/png',
+          'jpg' => 'image/jpg',
+          'jpeg' => 'image/jpeg',
+          'webp' => 'image/webp',
+        ];
+
+        // Fonction pour uniformiser les slugs et "cleaner" les noms de fichiers (-> Trouvé sur le web)
+        function slugify($text, string $divider = '-')
+        {
+          // Replace non letter or digits by -
+          $text = preg_replace('~[^\pL\d]+~u', $divider, $text);
+          // Transliterate
+          $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+          // Remove unwanted characters
+          $text = preg_replace('~[^-\w]+~', '', $text);
+          // Trim
+          $text = trim($text, $divider);
+          // Remove duplicate divider
+          $text = preg_replace('~-+~', $divider, $text);
+          // Lowercase
+          $text = strtolower($text);
+          // Check if it is empty
+          if (empty($text)) {
+            return 'n-a';
+          }
+          // Return result
+          return $text;
+        }
+        // Fonctions de vérification du téléchargement de l'avatar
+        function isUploadSuccessful(array $uploadedFile): bool
+        {
+          return isset($uploadedFile['error']) && $uploadedFile['error'] === UPLOAD_ERR_OK;
+        }
+        // Fonction pour vérifier si le fichier téléchargé est inférieur à 2Mo
+        function isUploadSmallerThan2M(array $uploadedFile): bool
+        {
+          return $uploadedFile['size'] < 2000000;
+        }
+        // Fonction pour vérifier si le type MIME du fichier téléchargé est autorisé
+        function isMimeTypeAuthorized(array $authorizedMimeTypes, array $uploadedFile): bool
+        {
+          $finfo = new \finfo(FILEINFO_MIME_TYPE);
+          $mimeType = $finfo->file($uploadedFile['tmp_name']);
+
+          return in_array($mimeType, $authorizedMimeTypes, true);
+        }
+        // Fonction pour obtenir l'extension du fichier téléchargé à partir du type MIME
+        function getExtensionFromMimeType(array $authorizedMimeTypes, array $uploadedFile): string
+        {
+          $finfo = new \finfo(FILEINFO_MIME_TYPE);
+          $mimeType = $finfo->file($uploadedFile['tmp_name']);
+
+          if ($extension = array_search($mimeType, $authorizedMimeTypes, true)) {
+            return $extension;
+          }
+          throw new \Exception('Le type MIME n\'est lié à aucune extension');
+        }
+        // Fonction pour déplacer le fichier téléchargé vers le dossier '/uploads/avatar' du serveur et supprimer l'ancien fichier fichier si il est renseigné
+        function moveUploadedFile(array $uploadedFile, string $fileName, string $oldFileName = null): bool
+        {
+          if (move_uploaded_file($uploadedFile['tmp_name'], _AVATAR_IMAGES_FOLDER_ . $fileName)) {
+            if ($oldFileName !== null) {
+              unlink(_AVATAR_IMAGES_FOLDER_ . $oldFileName);
+            }
+          }
+          return true;
+        }
+
+        // Je vérifie si le champs "avatar" est renseigné (il est facultatif dans l'updateForm) alors je le traite
+        if (isset($_FILES['uploaded_file']) && $_FILES['uploaded_file']['name'] !== '') {
+          $uploadedFile = $_FILES['uploaded_file'];
+          // $uploadedFile = $_FILES['uploaded_file'] ?? [];
+
+          // Je stocke les informations de l'Input Téléchargement dans une variable. Si aucun fichier n'a été téléchargé, j'initialise cette variable en un tableau vide.
+
+          // Vérification du téléchargement par la méthode $_POST et au bon format de fichier
+          if (!isUploadSuccessful($uploadedFile)) {
+            throw new \Exception('Le téléchargement a échoué : aucun fichier sélectionné');
+          }
+          if (!isMimeTypeAuthorized($authorizedMimeTypes, $uploadedFile)) {
+            throw new \Exception('Le type de fichier n\'est pas supporté');
+          }
+          // Vérification taille fichier < 2Mo
+          if (!isUploadSmallerThan2M($uploadedFile)) {
+            throw new \Exception('Le fichier dépasse les 2 Mo');
+          }
+
+          // Vérifications OK, on peut démarrer le téléchargement du fichier vers le dossier '/uploads/avatar' du serveur
+          $extension = getExtensionFromMimeType($authorizedMimeTypes, $uploadedFile);
+          $fileNameWithoutExtension = pathinfo($uploadedFile["name"], PATHINFO_FILENAME);
+          $fileName = slugify($fileNameWithoutExtension);
+          // uniqid() : utile pour éviter l'écrasement de fichier si le même nom de fichier image est utilisé plusieurs fois.
+          $fileName = uniqid() . '-' . $fileName . '.' . $extension;
+
+          // Je récupère le nom de l'ancien fichier "avatar" de l'utilisateur connecté en vu de le supprimer après le téléchargement du nouveau fichier
+          $oldFileName = $_SESSION['user']['avatar'];
+          if (!moveUploadedFile($uploadedFile, $fileName, $oldFileName)) {
+            throw new \Exception('Le téléchargement a échoué ...');
+          }
+
+          $_SESSION['user']['avatar'] = $fileName;
+        }
+
+
         // Si il y a soumission de formulaire, alors hydrater l'objet User avec les données du formulaire (voir la méthode dans App\Entity)
         $user->hydrate($_POST);
         // Puis je récupère l'id de l'utilisateur connecté
         $user->setId($_SESSION['user']['id']);
+        // Puis je récupère l'avatar de l'utilisateur connecté
+        // (si il a été modifié précédemment, il a été actualisé suite au traitement de l'upload de l'avatar)
+        $user->setAvatar($_SESSION['user']['avatar']);
 
+        // Vérifie si tous les champs sont renseignés (sauf 'avatar') et si les types de données sont valides (pour email et date)
         $errors = $user->validate();
+
+        // TODO Les données de $_POST sont-elles bien nettoyées ? -> striptags() ???
 
         if (empty($errors)) {
           // Si il n'y a pas d'erreurs, alors on enregistre les modifications de l'utilisateur en BDD
@@ -123,19 +238,24 @@ class UserController extends Controller
             'user_name' => $user->getUserName(),
             'birth_date' => $user->getBirthDate(),
             'role' => $user->getRole(),
-            // 'avatar' => $user->getAvatar(),
+            'avatar' => $user->getAvatar(),
           ];
 
           // Enfin on redirige vers la page Profile
-          header('Location: index.php?controller=user&action=profile');
+          // header('Location: index.php?controller=user&action=profile');
         }
-        // var_dump($user);
       }
-
       // Pour afficher le formulaire de modification d'un compte utilisateur
       $this->render('user/updateForm', [
         'errors' => $errors
       ]);
+
+
+      var_dump($_FILES['uploaded_file']);
+      var_dump($_SESSION['user']);
+
+      //
+      //
     } catch (\Exception $e) {
       $this->render('errors/default', [
         'error' => $e->getMessage()

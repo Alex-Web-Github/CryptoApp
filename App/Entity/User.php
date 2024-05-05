@@ -14,7 +14,7 @@ class User extends Entity
   protected ?string $birth_date = '';
   protected ?string $user_name = '';
   protected ?string $role = '';
-  // protected ?string $avatar = '';
+  protected ?string $avatar = '';
 
   // Remarque : "?int" signifie que le type retourné est de type int ou null
   public function getId(): ?int
@@ -103,21 +103,22 @@ class User extends Entity
 
   // Voir la fonction UPLOAD FILE() dans Tools/FilesTools.php pour la gestion des fichiers !!!!
 
-  // public function getAvatar(): ?string
-  // {
-  //   return $this->avatar;
-  // }
+  public function getAvatar(): ?string
+  {
+    return $this->avatar;
+  }
 
-  // public function setAvatar(?string $avatar): self
-  // {
-  //   $this->avatar = $avatar;
+  public function setAvatar(?string $avatar): self
+  {
+    $this->avatar = $avatar;
 
-  //   return $this;
-  // }
+    return $this;
+  }
 
   /*
         Pourrait être déplacé dans une classe UserValidator
     */
+
   // public function validateFile(): array
   // {
   //   $errors = [];

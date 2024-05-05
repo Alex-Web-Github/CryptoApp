@@ -20,7 +20,7 @@
             <!-- Onglets de navigation -->
             <ul class="nav nav-pills " id="myTab" role="tablist">
               <li class="nav-item" role="retour">
-                <a class="nav-link" href="index.php?controller=user&action=profile">Retour</a>
+                <a class="nav-link" href="index.php?controller=user&action=profile"><-- Retour</a>
               </li>
               <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="dailyTrend-tab" data-bs-toggle="tab" data-bs-target="#dailyTrend" type="button" role="tab" aria-controls="dailyTrend" aria-selected="true">Cours sur 24 heures</button>

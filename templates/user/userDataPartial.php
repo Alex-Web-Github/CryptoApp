@@ -20,6 +20,7 @@
         <a class="btn btn-primary btn-sm px-4 me-sm-3" href="index.php?controller=user&action=update">Modifier mon profil</a>
 
         <?php
+        // Je n'autorise pas la suppression d'un compte admin de cette manière
         if ($_SESSION['user']['role'] === 'user') { ?>
           <a class="btn btn-outline-dark btn-sm px-4" href="index.php?controller=user&action=delete">Supprimer mon profil</a>
         <?php } ?>
@@ -28,5 +29,14 @@
   </div>
 
   <!-- Affichage de l'Avatar -->
-  <div class="col-12 col-sm-4 col-md-3 col-xl-2 offset-xl-1 order-first order-md-2"><img class="img-fluid w-100 rounded-3 my-5" src="assets/img/default-avatar.svg" alt="avatar" /></div>
+  <div class="col-12 col-sm-4 col-md-3 col-xl-2 offset-xl-1 order-first order-md-2">
+    <img class="img-fluid w-100 rounded-5 my-5" src="/uploads/avatar/<?= isset($_SESSION['user']) ? $_SESSION['user']['avatar'] : '' ?>" alt="Avatar de <?= isset($_SESSION['user']) ? $_SESSION['user']['first_name'] : '' ?>" />
+
+
+    <?php // Le chemin par la CONSTANTE NE FONCTIONNE PAS ??? 
+    ?>
+    <!-- <img class="img-fluid w-100 rounded-5 my-5" src="<?= _AVATAR_IMAGES_FOLDER_ . isset($_SESSION['user']) ? $_SESSION['user']['avatar'] : '' ?>" alt="Avatar de <?= isset($_SESSION['user']) ? $_SESSION['user']['first_name'] : '' ?>" /> -->
+
+  </div>
+
 </div>

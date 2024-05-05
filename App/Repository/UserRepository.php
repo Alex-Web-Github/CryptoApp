@@ -67,18 +67,18 @@ class UserRepository extends Repository
 
     if ($user->getId() !== null) {
       $query = $this->pdo->prepare(
-        'UPDATE user SET first_name = :first_name, last_name = :last_name, email = :email, birth_date = :birth_date, user_name = :user_name, password = :password WHERE id = :id'
+        'UPDATE user SET first_name = :first_name, last_name = :last_name, email = :email, birth_date = :birth_date, user_name = :user_name, password = :password, avatar = :avatar WHERE id = :id'
       );
       $query->bindValue(':id', $user->getId(), $this->pdo::PARAM_INT);
-      // $query->bindValue(':avatar', $user->getAvatar(), $this->pdo::PARAM_STR);
+      $query->bindValue(':avatar', $user->getAvatar(), $this->pdo::PARAM_STR);
     } else {
       // Si pas d'Id, il s'agit d'un nouvel Utilisateur
       $query = $this->pdo->prepare(
-        'INSERT INTO user (first_name, last_name, email, user_name, birth_date, password, role) VALUES (:first_name, :last_name, :email, :user_name, :birth_date, :password, :role)'
+        'INSERT INTO user (first_name, last_name, email, user_name, birth_date, password, role, avatar) VALUES (:first_name, :last_name, :email, :user_name, :birth_date, :password, :role, :avatar)'
       );
-      // Je définis le rôle par défaut et l'avatar par défaut (voir les Constantes)
+      // Je définis le rôle par défaut et l'avatar par défaut (voir les Constantes dans config.php)
       $query->bindValue(':role', $user->getRole(), $this->pdo::PARAM_STR);
-      // $query->bindValue(':avatar', $user->getAvatar(), $this->pdo::PARAM_STR);
+      $query->bindValue(':avatar', $user->getAvatar(), $this->pdo::PARAM_STR);
     }
 
     $query->bindValue(':first_name', $user->getFirstName(), $this->pdo::PARAM_STR);

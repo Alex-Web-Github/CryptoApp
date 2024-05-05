@@ -60,7 +60,7 @@ class AuthController extends Controller
           'user_name' => $user->getUserName(),
           'birth_date' => $user->getBirthDate(),
           'role' => $user->getRole(),
-          // 'avatar' => $user->getAvatar(),
+          'avatar' => $user->getAvatar(),
         ];
 
         if (User::isUser()) {
@@ -83,11 +83,13 @@ class AuthController extends Controller
 
   protected function logout()
   {
-    //Prévient les attaques de fixation de session
-    session_regenerate_id(true);
-    //Supprime les données de session du serveur
+    // Prévient les attaques de fixation de session-> Utile ici ???
+    // session_regenerate_id(true);
+
+
+    // Supprime les données de session du serveur
     session_destroy();
-    //Supprime les données du tableau $_SESSION
+    // Supprime les données du tableau $_SESSION
     unset($_SESSION);
     header('location: index.php?controller=auth&action=login');
   }
