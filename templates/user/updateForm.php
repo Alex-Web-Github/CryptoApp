@@ -41,8 +41,7 @@
 
         <div class="col-md-6">
           <label for="password" class="form-label text-white">Mot de passe</label>
-          <input type="text" class="form-control <?= (isset($errors['password']) ? 'is-invalid' : '') ?>" id="password" name="password" value="">
-          <div class="invalid-feedback"><?= $errors['password'] ?></div>
+          <input type="text" class="form-control" id="password" name="password" value="">
         </div>
 
         <div class="col-md-6">

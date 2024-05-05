@@ -16,7 +16,7 @@ class StringTools
     $value = ucwords(str_replace(array('-', '_'), ' ', $value));
     // On retire les espaces
     $value = str_replace(' ', '', $value);
-    // Si le param $pasacalCase est à true, on met la première lettre en minuscule
+    // Si le param $pascalCase est à true, on met la première lettre en minuscule
     if ($pascalCase === false) {
       return lcfirst($value);
     } else {
@@ -26,6 +26,7 @@ class StringTools
 
   /*
         Transforme une chaine en pascalCase (lowerCamelCase) en appellant toCamelCase avec le deuxième param à true
+        nb: Utiliser dans la méthode hydrate de la classe Entity
     */
   public static function toPascalCase(string $value): string
   {
