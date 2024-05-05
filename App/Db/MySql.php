@@ -40,7 +40,6 @@ class Mysql
   // et de la réutiliser à chaque fois que l'on en a besoin
   // 
   // Static : permet d'appeler la méthode directement avec la classe (ie: sans instancier d'Objet -> "new MyObject()").
-  // On l'appelle commme ceci : $mysql = Mysql::getInstance();
   {
     if (is_null(self::$_instance)) {
       self::$_instance = new Mysql();

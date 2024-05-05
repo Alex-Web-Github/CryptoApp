@@ -83,9 +83,6 @@ class AuthController extends Controller
 
   protected function logout()
   {
-    // Prévient les attaques de fixation de session-> Utile ici ???
-    // session_regenerate_id(true);
-
 
     // Supprime les données de session du serveur
     session_destroy();

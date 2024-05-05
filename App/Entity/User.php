@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-
 class User extends Entity
 {
 
@@ -115,48 +114,6 @@ class User extends Entity
     return $this;
   }
 
-  /*
-        Pourrait être déplacé dans une classe UserValidator
-    */
-
-  // public function validateFile(): array
-  // {
-  //   $errors = [];
-
-  //   // Problème de téléchargement
-  //   if (isset($this->getAvatar()['error']) && ($$this->getAvatar()['error']) === UPLOAD_ERR_OK) {
-  //     $errors['avatar'] = 'Problème de téléchargement';
-  //   }
-  //   // Problème de taille de fichier
-  //   if ($this->getAvatar()['size'] > 2000000) {
-  //     $errors['avatar'] = 'Le fichier est trop lourd';
-  //   }
-
-  //   // Les types MIME autorisés sont stockés dans une variable
-  //   $authorizedMimeTypes = [
-  //     'png' => 'image/png',
-  //     'jpg' => 'image/jpg',
-  //     'webp' => 'image/webp',
-  //   ];
-
-  //   $mimeType = $finfo->file($this->getAvatar()['tmp_name']);
-  //   if (in_array($mimeType, $authorizedMimeTypes, true)) {
-  //     $errors['avatar'] = 'Le fichier n\'est pas une image';
-  //   }
-
-
-
-
-  //   return $errors;
-  // }
-
-  //A UTILISER ???
-  // function deleteFileFromUpload(string $fileToDelete)
-  // // Effacer le fichier d'une photo sur le répertoire '_GALLERY_IMG_PATH_' (./upload') du serveur
-  // {
-  //   unlink(_GALLERY_IMG_PATH_ . $fileToDelete);
-  // }
-
 
   /*
         Pourrait être déplacé dans une classe UserValidator
@@ -182,9 +139,6 @@ class User extends Entity
       $errors['birth_date'] = 'Le champ date de naissance ne doit pas être vide';
     } else if ($this->getBirthDate() > date('Y-m-d')) {
       $errors['birth_date'] = 'La date de naissance n\'est pas valide';
-    }
-    if (empty($this->getPassword())) {
-      $errors['password'] = 'Le champ mot de passe ne doit pas être vide';
     }
     return $errors;
   }

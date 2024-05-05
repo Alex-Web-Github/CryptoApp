@@ -32,5 +32,4 @@
     <img class="img-fluid w-100 rounded-5 my-5" src="/uploads/avatar/<?= isset($_SESSION['user']) ? $_SESSION['user']['avatar'] : '' ?>" alt="Avatar de <?= isset($_SESSION['user']) ? $_SESSION['user']['first_name'] : '' ?>" />
 
   </div>
-
 </div>

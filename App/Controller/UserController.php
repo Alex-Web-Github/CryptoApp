@@ -142,14 +142,23 @@ class UserController extends Controller
         $user->hydrate($_POST);
         // Puis je récupère l'id de l'utilisateur connecté
         $user->setId($_SESSION['user']['id']);
+        // Je récupère le rôle de l'utilisateur connecté
+        $user->setRole($_SESSION['user']['role']);
         // Puis je récupère l'avatar de l'utilisateur connecté
         // (si il a été modifié précédemment, il a été actualisé suite au traitement de l'upload de l'avatar)
         $user->setAvatar($_SESSION['user']['avatar']);
 
         // Vérifie si tous les champs sont renseignés (sauf 'avatar') et si les types de données sont valides (pour email et date)
-        // $errors = $user->validate();
+        $errors = $user->validate();
 
-        // TODO Les données de $_POST sont-elles bien nettoyées ? -> striptags() ???
+        // Si le champs Password n'est pas renseigné, alors on ne le modifie pas
+        if (empty($_POST['password'])) {
+          // ici le mot de passe est déjà hashé, donc on le récupère tel quel
+          $user->setPassword($_SESSION['user']['password']);
+        } else {
+          // Sinon, on hash le mot de passe
+          $user->setPassword(password_hash($_POST['password'], PASSWORD_DEFAULT));
+        }
 
         if (empty($errors)) {
           // Si il n'y a pas d'erreurs, alors on enregistre les modifications de l'utilisateur en BDD

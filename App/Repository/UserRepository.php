@@ -3,8 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\User;
-use App\Db\Mysql;
-use App\Tools\StringTools;
 
 class UserRepository extends Repository
 {
@@ -71,6 +69,7 @@ class UserRepository extends Repository
       );
       $query->bindValue(':id', $user->getId(), $this->pdo::PARAM_INT);
       $query->bindValue(':avatar', $user->getAvatar(), $this->pdo::PARAM_STR);
+      $query->bindValue(':password', $user->getPassword(), $this->pdo::PARAM_STR);
     } else {
       // Si pas d'Id, il s'agit d'un nouvel Utilisateur
       $query = $this->pdo->prepare(
@@ -79,6 +78,7 @@ class UserRepository extends Repository
       // Je définis le rôle par défaut et l'avatar par défaut (voir les Constantes dans config.php)
       $query->bindValue(':role', $user->getRole(), $this->pdo::PARAM_STR);
       $query->bindValue(':avatar', $user->getAvatar(), $this->pdo::PARAM_STR);
+      $query->bindValue(':password', password_hash($user->getPassword(), PASSWORD_DEFAULT), $this->pdo::PARAM_STR);
     }
 
     $query->bindValue(':first_name', $user->getFirstName(), $this->pdo::PARAM_STR);
@@ -86,7 +86,6 @@ class UserRepository extends Repository
     $query->bindValue(':email', $user->getEmail(), $this->pdo::PARAM_STR);
     $query->bindValue(':user_name', $user->getUserName(), $this->pdo::PARAM_STR);
     $query->bindValue(':birth_date', $user->getBirthDate(), $this->pdo::PARAM_STR);
-    $query->bindValue(':password', password_hash($user->getPassword(), PASSWORD_DEFAULT), $this->pdo::PARAM_STR);
 
     return $query->execute();
   }
