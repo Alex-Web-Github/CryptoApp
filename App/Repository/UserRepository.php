@@ -9,8 +9,8 @@ class UserRepository extends Repository
 
   public function findAll(): array
   {
-    $query = $this->pdo->prepare("SELECT * FROM user");
-    // $query->bindParam(':role', 'user', $this->pdo::PARAM_STR);
+    $query = $this->pdo->prepare("SELECT * FROM user WHERE role = :role");
+    $query->bindValue(':role', 'user', $this->pdo::PARAM_STR);
     $query->execute();
     $users = $query->fetchAll($this->pdo::FETCH_ASSOC);
     $usersList = [];

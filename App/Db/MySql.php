@@ -54,4 +54,7 @@ class Mysql
     }
     return $this->pdo;
   }
+
+  // A comparer avec cet exemple qui fonctionne :  
+  //$this->pdo = new PDO(dsn:'mysql:dbname=sc4foal9574_quai_antique;host=localhost;charset=utf8mb4',username: 'sc4foal9574_quai_antique',password: '####');
 }

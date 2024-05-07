@@ -46,7 +46,7 @@ class AdminController extends Controller
 
     try {
       // Vérifier si l'utilisateur est connecté et a le rôle ADMIN
-      if (User::isLogged() && User::isAdmin()) {
+      if (User::isAdmin()) {
 
         // On instancie le repository des utilisateurs
         $userRepository = new UserRepository();
@@ -82,7 +82,7 @@ class AdminController extends Controller
   {
     try {
 
-      if (isset($_GET['id']) && !empty($_GET['id']) && is_numeric($_GET['id'])) {
+      if (isset($_GET['id']) && !empty($_GET['id'])) {
 
         $user = new User();
         $user->setId($_GET['id']);
@@ -91,15 +91,14 @@ class AdminController extends Controller
         // On vérifie si l'utilisateur existe
         if ($userRepository->findOneById($user->getId())) {
           $userRepository->delete($user);
-
-          // Enfin on redirige vers la page Admin/ShowAllUsers
-          header('Location: index.php?controller=admin&action=showAllUsers');
         } else {
           throw new \Exception("Aucun utilisateur trouvé");
         }
       } else {
         throw new \Exception("Aucun utilisateur sélectionné");
       }
+      // On redirige vers le dashboard
+      header('Location: index.php?controller=admin&action=dashboard');
     } catch (\Exception $e) {
       $this->render('errors/default', [
         'error' => $e->getMessage()

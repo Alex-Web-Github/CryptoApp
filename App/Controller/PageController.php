@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-// use App\Repository\BookRepository;
-
 class PageController extends Controller
 {
   public function route(): void
@@ -33,8 +31,7 @@ class PageController extends Controller
   {
     $this->render('page/home', [
       // pas besoin de passer des paramètres à la page Home dans mon cas
-      // 'test' => 555,
-      // 'nom' => "John",
+
     ]);
   }
 }

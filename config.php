@@ -8,7 +8,7 @@ define('_TEMPLATEPATH_', __DIR__ . '/templates');
 // On définit les constantes pour les rôles et l'avatar par défaut
 define("ROLE_USER", "user");
 define("ROLE_ADMIN", "admin");
-define("DEFAULT_AVATAR", "default-avatar.svg");
+define("DEFAULT_AVATAR", "default-avatar.png");
 
 // On définit les constantes pour le chemin vers les fichiers images des avatars
 define('_AVATAR_IMAGES_FOLDER_', __DIR__ . '/uploads/avatar/');
