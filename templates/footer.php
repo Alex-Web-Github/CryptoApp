@@ -8,9 +8,9 @@
         <div class="small m-0 text-white">CryptoApp | <?= date('Y'); ?></div>
       </div>
       <div class="col-auto">
-        <a class="link-light small" href="/">Mentions légales</a>
+        <a class="link-light small" href="./index.php">Mentions légales</a>
         <span class="text-white mx-1">&middot;</span>
-        <a class="link-light small" href="/">Contact</a>
+        <a class="link-light small" href="./index.php">Contact</a>
       </div>
     </div>
   </div>
@@ -19,7 +19,7 @@
 </div>
 <script src="assets/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="/assets/js/custom.js"></script>
+<script src="assets/js/custom.js"></script>
 </body>
 
 </html>

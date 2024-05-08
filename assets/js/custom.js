@@ -1,4 +1,5 @@
 // requête en AJAX pour ajouter une crypto favorite à un utilisateur connecté
+
 let req = new XMLHttpRequest();
 let select = document.querySelector('.form-select');
 select.addEventListener('change', function () {

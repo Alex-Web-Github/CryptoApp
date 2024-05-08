@@ -100,8 +100,6 @@ class User extends Entity
   }
 
 
-  // Voir la fonction UPLOAD FILE() dans Tools/FilesTools.php pour la gestion des fichiers !!!!
-
   public function getAvatar(): ?string
   {
     return $this->avatar;

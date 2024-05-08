@@ -35,11 +35,9 @@ class Mysql
   }
 
   public static function getInstance(): self
-  // Design Pattern Singleton
-  // Permet de n'avoir qu'une seule instance de la classe Mysql dans la mémoire de PHP
-  // et de la réutiliser à chaque fois que l'on en a besoin
-  // 
-  // Static : permet d'appeler la méthode directement avec la classe (ie: sans instancier d'Objet -> "new MyObject()").
+  //// Design Pattern Singleton //////////////
+
+  // Permet de n'avoir qu'une seule instance de la classe Mysql dans la mémoire de PHP et de la réutiliser à chaque fois que l'on en a besoin
   {
     if (is_null(self::$_instance)) {
       self::$_instance = new Mysql();
@@ -54,7 +52,4 @@ class Mysql
     }
     return $this->pdo;
   }
-
-  // A comparer avec cet exemple qui fonctionne :  
-  //$this->pdo = new PDO(dsn:'mysql:dbname=sc4foal9574_quai_antique;host=localhost;charset=utf8mb4',username: 'sc4foal9574_quai_antique',password: '####');
 }
