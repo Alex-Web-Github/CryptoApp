@@ -38,11 +38,11 @@ class FileTools
     throw new \Exception('Le type MIME n\'est lié à aucune extension');
   }
 
-  // Fonction pour déplacer le fichier téléchargé vers le dossier '/uploads/avatar' du serveur et supprimer l'ancien fichier fichier si il est renseigné
+  // Fonction pour déplacer le fichier téléchargé vers le dossier '/uploads/avatar' du serveur et supprimer l'ancien fichier fichier si il est renseigné SAUF si c'est l'avatar par défaut
   public static function moveUploadedFile(array $uploadedFile, string $fileName, string $oldFileName = null): bool
   {
     if (move_uploaded_file($uploadedFile['tmp_name'], _AVATAR_IMAGES_FOLDER_ . $fileName)) {
-      if ($oldFileName !== null) {
+      if ($oldFileName !== null && $oldFileName !== DEFAULT_AVATAR) {
         unlink(_AVATAR_IMAGES_FOLDER_ . $oldFileName);
       }
     }

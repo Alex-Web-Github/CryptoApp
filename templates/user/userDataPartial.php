@@ -17,11 +17,11 @@
         </div>
       </div>
       <div class="gap-4 d-flex flex-column flex-md-row mt-4 ">
-        <a class="btn btn-primary px-4 me-md-3" href="index.php?controller=user&action=update">Modifier mon profil</a>
+        <a class="btn btn-primary px-4 me-md-3" href="./index.php?controller=user&action=update">Modifier mon profil</a>
         <?php
         // Je n'autorise pas la suppression d'un compte admin de cette manière
         if ($_SESSION['user']['role'] === 'user') { ?>
-          <a class="btn btn-outline-dark px-4" href="index.php?controller=user&action=delete">Supprimer mon profil</a>
+          <a class="btn btn-outline-dark px-4" href="./index.php?controller=user&action=delete">Supprimer mon profil</a>
         <?php } ?>
       </div>
     </div>
@@ -29,7 +29,7 @@
 
   <!-- Affichage de l'Avatar -->
   <div class="col-10 col-sm-5 col-md-4 col-xl-3 offset-xl-1 order-first order-md-2 mx-auto">
-    <img class="img-fluid w-100 rounded-5 my-5" src="/uploads/avatar/<?= isset($_SESSION['user']) ? $_SESSION['user']['avatar'] : '' ?>" alt="Avatar de <?= isset($_SESSION['user']) ? $_SESSION['user']['first_name'] : '' ?>" />
+    <img class="img-fluid w-100 rounded-5 my-5" src="./uploads/avatar/<?= isset($_SESSION['user']) ? $_SESSION['user']['avatar'] : '' ?>" alt="Avatar de <?= isset($_SESSION['user']) ? $_SESSION['user']['first_name'] : '' ?>" />
 
   </div>
 </div>
