@@ -19,7 +19,7 @@
 
             <!-- Onglets de navigation -->
             <a class="nav-link mb-4" href="./index.php?controller=user&action=profile"><-- Revenir sur votre Profil</a>
-                <ul class="nav nav-pills " id="myTab" role="tablist">
+                <ul class="nav nav-pills" id="myTab" role="tablist">
                   <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="dailyTrend-tab" data-bs-toggle="tab" data-bs-target="#dailyTrend" type="button" role="tab" aria-controls="dailyTrend" aria-selected="true">Cours sur 24 heures</button>
                   </li>

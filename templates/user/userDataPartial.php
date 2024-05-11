@@ -1,4 +1,4 @@
-<div class="row gx-5 align-items-center justify-content-between">
+<div class="row gx-5 mx-0 justify-content-between">
 
   <div class="col-12 col-sm-7 col-md-8 col-xl-7 order-last order-sm-first">
     <div class="my-md-5 m-0 text-center text-md-start">

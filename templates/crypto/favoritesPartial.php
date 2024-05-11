@@ -1,4 +1,4 @@
-<div class="row gx-5 align-items-center justify-content-center">
+<div class="row gx-5 mx-0 align-items-center justify-content-center">
   <div class="col">
     <div class="table-responsive my-md-5 m-0 text-center text-md-start">
 
@@ -9,7 +9,8 @@
             <th scope="col">Nom</th>
             <th scope="col">Prix</th>
             <th scope="col">Variation /24h</th>
-            <th scope="col">Action</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
@@ -40,14 +41,15 @@
                 <td><?= $cryptoPrice ?></td>
                 <td><?= $cryptoDailyVariation ?></td>
                 <td class="vertical-align-center">
-                  <a class=" pe-4 py-0 text-warning text-decoration-none" href="./index.php?controller=crypto&action=showChart&name=<?= $cryptoSymbol ?>">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-graph-up-arrow" viewBox="0 0 20 20">
+                  <a class="py-0 text-warning text-decoration-none" href="./index.php?controller=crypto&action=showChart&name=<?= $cryptoSymbol ?>">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-graph-up-arrow" viewBox="0 0 30 30">
                       <path fill-rule="evenodd" d="M0 0h1v15h15v1H0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5" />
                     </svg>
                   </a>
-
-                  <a class="pe-4 py-0 text-warning" href="./index.php?controller=crypto&action=deleteFavorite&name=<?= $cryptoSymbol ?>">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 20 20">
+                </td>
+                <td class="vertical-align-center">
+                  <a class="py-0 text-warning" href="./index.php?controller=crypto&action=deleteFavorite&name=<?= $cryptoSymbol ?>">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-trash" viewBox="0 0 30 30">
                       <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"></path>
                       <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"></path>
                     </svg>

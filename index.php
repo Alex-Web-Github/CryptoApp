@@ -11,6 +11,7 @@ session_set_cookie_params([
   'lifetime' => 3600,
   'path' => '/',
   'domain' => $_SERVER['SERVER_NAME'],
+  //'secure' => true, // pas activé car pas de HTTPS sur le serveur de développement
   'httponly' => true
 ]);
 session_start();
